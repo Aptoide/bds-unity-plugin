@@ -1,0 +1,63 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 27
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+
+        //buildConfigField "String", "IAB_PERMISSION", '"com.appcoins.BILLING"'
+        buildConfigField "String", "IAB_BIND_ACTION", '"com.appcoins.wallet.iab.action.BIND"'
+        buildConfigField "String", "IAB_BIND_PACKAGE", '"com.appcoins.wallet"'
+        buildConfigField "String", "IAB_PERMISSION", '"com.appcoins.BILLING"'
+        buildConfigField "String", "IAB_KEY", '"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA4OioOpjKnev37o580YhOlQCbYlA62xee0B3O/JQ/Or9CuLGPC06/5CTB6sRbljEPccVBuYPQFIbJAw9UYPfQowLirjML1b2XW+W1RHxxSfmqSAbYvICcBuYY7C4hGK+3qrDIY47X+t+jSsgoKTz49Ag3bb2s7fQoMg414eMZrmq/USd1/lvUwFx2ldesUoIZ6mTPoJTmX0idAYK1eCAUjhX/gFG+7orf8jafw3B9k1QfbFtoDGCw6L3GQ+8VXcXy5MZykVdBzh6PuLzDEGRrM4GAX7rJ+iJVdHiBneOsWN3wvWALUaeLFVN22iiSb9PIJfFOw6TyEISoRUlCNf1NYwIDAQAB"'
+        buildConfigField "String", "IAB_UPDATE_ACTION", '" "'
+        buildConfigField "String", "WALLET_STORE_FILE", '"replace"'
+        buildConfigField "String", "WALLET_STORE_PASSWORD", '"replace"'
+        buildConfigField "String", "WALLET_KEY_ALIAS", '"replace"'
+        buildConfigField "String", "WALLET_KEY_PASSWORD", '"replace"'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            resValue "bool", "APPCOINS_ENABLE_POA", "false"
+            resValue "bool", "APPCOINS_ENABLE_DEBUG", "false"
+            resValue "string", "APPCOINS_PREFAB", "AppcoinsUnity"
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    buildToolsVersion '27.0.3'
+}
+
+dependencies {
+    provided files('./libs/UnityPlayer.jar')
+    compile 'com.android.support:support-annotations:25.0.0'
+}
+
+clean.doFirst {
+    delete "../../AppcoinsUnityPlugin/Assets/Plugins/Android/appcoinsunity-debug.aar"
+    delete "../../AppcoinsUnityPlugin/Assets/Plugins/Android/appcoinsunity-debug.aar.meta"
+    delete "../../AppcoinsUnityPlugin/Assets/Plugins/Android/appcoinsunity-release.aar"
+    delete "../../AppcoinsUnityPlugin/Assets/Plugins/Android/appcoinsunity-releasae.aar.meta"
+
+    println "Cleared AAR on unity side"
+}
+
+task copyAarToUnity {
+//    copy {
+//        from 'build/outputs/aar/appcoinsunity-release.aar'
+//        into "../../AppcoinsUnityPlugin/Assets/Plugins/Android"
+//    }
+    copy {
+        from 'build/outputs/aar/appcoinsunity-debug.aar'
+        into "../../AppcoinsUnityPlugin/Assets/Plugins/Android"
+    }
+}
+
