@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
-using UnityEngine.Purchasing;
-using UnityEngine.Purchasing.Extension;
 
 namespace Appcoins.Purchasing
 {
@@ -12,16 +10,16 @@ namespace Appcoins.Purchasing
     {
         public List<AppcoinsProduct> all;
 
-        public AppcoinsProductCollection(HashSet<ProductDefinition> prods)
-        {
-            all = new List<AppcoinsProduct>();
+        //public AppcoinsProductCollection(HashSet<ProductDefinition> prods)
+        //{
+        //    all = new List<AppcoinsProduct>();
 
-            foreach (ProductDefinition prodDef in prods)
-            {
-                AppcoinsProduct prod = new AppcoinsProduct(prodDef);
-                all.Add(prod);
-            }
-        }
+        //    foreach (ProductDefinition prodDef in prods)
+        //    {
+        //        AppcoinsProduct prod = new AppcoinsProduct(prodDef);
+        //        all.Add(prod);
+        //    }
+        //}
 
         public AppcoinsProductCollection(HashSet<AppcoinsProduct> prods)
         {

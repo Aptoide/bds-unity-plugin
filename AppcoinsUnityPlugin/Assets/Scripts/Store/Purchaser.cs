@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Purchasing;
 using Appcoins.Purchasing;
 using UnityEngine.Events;
 
@@ -26,7 +25,7 @@ public class Purchaser : MonoBehaviour, IAppcoinsStoreListener
     private static AppcoinsStoreController m_StoreController;          // The AppCoins Purchasing system.
 
     private AppcoinsPurchasing _appcoinsPurchasing;
-    private ConfigurationBuilder _builder;
+    private AppcoinsConfigurationBuilder _builder;
 
     void Awake()
     {
@@ -36,13 +35,10 @@ public class Purchaser : MonoBehaviour, IAppcoinsStoreListener
         onPurchaseSuccess = new PurchaseEvent();
         onPurchaseFailed = new PurchaseEvent();
 
-        StandardPurchasingModule stdModule = StandardPurchasingModule.Instance();
-        Debug.Log("StandardPurchasingModule " + stdModule);
-        // Create a builder, first passing in a suite of Unity provided stores.
-        _builder = ConfigurationBuilder.Instance(stdModule);
+        _builder = new AppcoinsConfigurationBuilder();
     }
 
-    public void AddProduct(string skuID, ProductType type) {
+    public void AddProduct(string skuID, AppcoinsProductType type) {
         _builder.AddProduct(skuID, type);
     }
 
@@ -85,8 +81,8 @@ public class Purchaser : MonoBehaviour, IAppcoinsStoreListener
              //If the look up found a product for this device's store and that product is ready to be sold ...
             if (product != null)
             {
-                if (product.productType == ProductType.NonConsumable && OwnsProduct(productId)) {
-                    OnPurchaseFailed(product, PurchaseFailureReason.DuplicateTransaction);
+                if (product.productType == AppcoinsProductType.NonConsumable && OwnsProduct(productId)) {
+                    OnPurchaseFailed(product, AppcoinsPurchaseFailureReason.DuplicateTransaction);
                     SetStatus("BuyProductID: FAIL. Not purchasing product, non-consumable is already owned!");
                     return;
                 }
@@ -147,7 +143,7 @@ public class Purchaser : MonoBehaviour, IAppcoinsStoreListener
     }
 
 
-    public void OnInitializeFailed(InitializationFailureReason error)
+    public void OnInitializeFailed(AppcoinsInitializationFailureReason error)
     {
         onInitializeFailed.Invoke();
 
@@ -155,17 +151,17 @@ public class Purchaser : MonoBehaviour, IAppcoinsStoreListener
     }
 
 
-    public PurchaseProcessingResult ProcessPurchase(AppcoinsProduct p)
+    public AppcoinsPurchaseProcessingResult ProcessPurchase(AppcoinsProduct p)
     {
         SetStatus("Processed purchase " + p.skuID);
 
         onPurchaseSuccess.Invoke(p);
 
-        return PurchaseProcessingResult.Complete;
+        return AppcoinsPurchaseProcessingResult.Complete;
     }
 
 
-    public void OnPurchaseFailed(AppcoinsProduct product, PurchaseFailureReason failureReason)
+    public void OnPurchaseFailed(AppcoinsProduct product, AppcoinsPurchaseFailureReason failureReason)
     {
         onPurchaseFailed.Invoke(product);
 

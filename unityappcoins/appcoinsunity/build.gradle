@@ -39,6 +39,9 @@ android {
 dependencies {
     provided files('./libs/UnityPlayer.jar')
     compile 'com.android.support:support-annotations:25.0.0'
+    // https://mvnrepository.com/artifact/io.reactivex.rxjava2/rxjava
+    compile group: 'io.reactivex.rxjava2', name: 'rxjava', version: '2.2.1'
+
 }
 
 clean.doFirst {

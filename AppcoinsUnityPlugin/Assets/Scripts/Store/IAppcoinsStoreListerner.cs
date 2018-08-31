@@ -1,14 +1,12 @@
-﻿using UnityEngine.Purchasing;
-
-namespace Appcoins.Purchasing
+﻿namespace Appcoins.Purchasing
 {
     public interface IAppcoinsStoreListener
     {
-        void OnInitializeFailed(InitializationFailureReason error);
+        void OnInitializeFailed(AppcoinsInitializationFailureReason error);
 
-        PurchaseProcessingResult ProcessPurchase(AppcoinsProduct p);
+        AppcoinsPurchaseProcessingResult ProcessPurchase(AppcoinsProduct p);
 
-        void OnPurchaseFailed(AppcoinsProduct product, PurchaseFailureReason reason);
+        void OnPurchaseFailed(AppcoinsProduct product, AppcoinsPurchaseFailureReason reason);
 
         void OnInitialized(AppcoinsStoreController controller);
     }

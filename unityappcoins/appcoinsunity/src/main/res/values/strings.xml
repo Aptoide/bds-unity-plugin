@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="install_wallet_from_ads">To pay for in-app items, you need to install the AppCoins BDS Wallet.</string>
+    <string name="wallet_missing">AppCoins Wallet Missing</string>
+    <string name="install">Install</string>
+    <string name="skip">Skip</string>
+</resources>

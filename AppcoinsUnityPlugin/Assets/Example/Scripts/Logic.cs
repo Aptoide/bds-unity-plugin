@@ -6,7 +6,6 @@ using UnityEngine;
 using UnityEngine.UI;
 
 using Appcoins.Purchasing;
-using UnityEngine.Purchasing;
 
 public class Logic : MonoBehaviour {
 
@@ -46,8 +45,8 @@ public class Logic : MonoBehaviour {
         _purchaser.onInitializeSuccess.AddListener(OnInitializeSuccess);
         _purchaser.onPurchaseSuccess.AddListener(OnPurchaseSuccess);
 
-        _purchaser.AddProduct(kProductIDConsumable, ProductType.Consumable);
-        _purchaser.AddProduct(kProductIDNonConsumable, ProductType.NonConsumable);
+        _purchaser.AddProduct(kProductIDConsumable, AppcoinsProductType.Consumable);
+        _purchaser.AddProduct(kProductIDNonConsumable, AppcoinsProductType.NonConsumable);
 
         _purchaser.InitializePurchasing();
     }

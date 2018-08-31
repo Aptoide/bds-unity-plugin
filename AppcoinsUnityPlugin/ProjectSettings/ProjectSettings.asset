@@ -243,7 +243,7 @@ PlayerSettings:
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
   AndroidKeystoreName: /Users/nunomonteiro/Dev/KeyStoreAptoide/blockchain_ds.keystore
-  AndroidKeyaliasName: appcoins_wallet
+  AndroidKeyaliasName: 
   AndroidBuildApkPerCpuArchitecture: 0
   AndroidTVCompatibility: 1
   AndroidIsGame: 1

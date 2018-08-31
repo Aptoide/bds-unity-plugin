@@ -24,6 +24,7 @@ apply plugin: 'com.android.application'
 
 dependencies {
   implementation fileTree(dir: 'libs', excludes: ['com.android.support.support-annotations*.jar'], include: ['*.jar'])
+  compile group: 'io.reactivex.rxjava2', name: 'rxjava', version: '2.2.1'
   **DEPS**
 }
 

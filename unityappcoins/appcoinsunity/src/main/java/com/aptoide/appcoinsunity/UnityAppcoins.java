@@ -1,6 +1,7 @@
 package com.aptoide.appcoinsunity;
 
 import android.content.Intent;
+import android.os.Debug;
 import android.util.Log;
 
 import com.aptoide.appcoinsunity.util.IabHelper;
@@ -8,6 +9,7 @@ import com.aptoide.appcoinsunity.util.IabResult;
 import com.aptoide.appcoinsunity.util.Inventory;
 import com.aptoide.appcoinsunity.util.PayloadHelper;
 import com.aptoide.appcoinsunity.util.Purchase;
+import com.aptoide.appcoinsunity.util.WalletUtils;
 import com.unity3d.player.UnityPlayer;
 
 import java.util.List;
@@ -155,7 +157,7 @@ public class UnityAppcoins  {
                 }
             };
 
-    static final String TAG = "UnityAppcoinsBDS";
+    public static final String TAG = "UnityAppcoinsBDS";
     // (arbitrary) request code for the purchase flow
     private static int REQUEST_CODE = 1337;
     private static  String developerAddress = "0xa43646ed0ece7595267ed7a2ff6f499f9f10f3c7";
@@ -186,6 +188,7 @@ public class UnityAppcoins  {
     }
 
     public void CreateIABHelper() {
+
         /* base64EncodedPublicKey should be YOUR APPLICATION'S PUBLIC KEY
          * (that you got from your Aptoide's back office). This is not your
          * developer public key, it's the *app-specific* public key.
@@ -215,12 +218,23 @@ public class UnityAppcoins  {
         // enable debug logging (for a production application, you should set this to false).
         mHelper.enableDebugLogging(shouldLog);
 
-        // Start setup. This is asynchronous and the specified listener
-        // will be called once setup completes.
-        mHelper.startSetup(
-                mSetupFinishedListener
-        );
 
+        if (WalletUtils.hasWalletInstalled(UnityPlayer.currentActivity)) {
+            // Start setup. This is asynchronous and the specified listener
+            // will be called once setup completes.
+            mHelper.startSetup(
+                    mSetupFinishedListener
+            );
+        } else {
+            Log.d("UnityAppCoins","Prompting to install wallet");
+            WalletUtils.promptToInstallWallet(UnityPlayer.currentActivity,
+                    UnityPlayer.currentActivity.getString(R.string.install_wallet_from_ads))
+                    .toCompletable()
+                    .doOnSubscribe(disposable1 -> {})
+                    .doOnComplete(() -> {})
+                    .subscribe(() -> {
+                    }, Throwable::printStackTrace);
+        }
     }
 
     public void makePurchase(String skuID) {

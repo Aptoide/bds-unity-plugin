@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
-using UnityEngine.Purchasing;
-using UnityEngine.Purchasing.Extension;
 
 namespace Appcoins.Purchasing
 {
@@ -16,7 +14,7 @@ namespace Appcoins.Purchasing
         // Products container
         public AppcoinsProductCollection products;
 
-        public AppcoinsStoreController (AppcoinsPurchasing appc, ConfigurationBuilder builder)
+        public AppcoinsStoreController (AppcoinsPurchasing appc, AppcoinsConfigurationBuilder builder)
         {
             _appcoinsIAB = appc;
             products = new AppcoinsProductCollection(builder.products);
@@ -26,7 +24,7 @@ namespace Appcoins.Purchasing
         // added call successCallback if not call failCallback
         public void FetchAdditionalProducts (HashSet<AppcoinsProduct> prodDefs, 
                                              Action successCallback, 
-                                             Action<InitializationFailureReason> failCallback
+                                             Action<AppcoinsInitializationFailureReason> failCallback
                                             ) 
         {
             foreach (AppcoinsProduct prodDef in prodDefs)
@@ -38,7 +36,7 @@ namespace Appcoins.Purchasing
 
                 else
                 {
-                    failCallback(InitializationFailureReason.NoProductsAvailable);
+                    failCallback(AppcoinsInitializationFailureReason.NoProductsAvailable);
                 }
             }
         }

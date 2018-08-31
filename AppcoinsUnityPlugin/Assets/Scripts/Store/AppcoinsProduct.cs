@@ -2,11 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
-using UnityEngine.Purchasing;
-using UnityEngine.Purchasing.Extension;
-
 namespace Appcoins.Purchasing
 {    
+    public enum AppcoinsProductType
+    {
+        Consumable,
+        NonConsumable,
+        Subscription
+    }
+
     public class AppcoinsProduct
     {
         // public string name;
@@ -14,13 +18,7 @@ namespace Appcoins.Purchasing
         public bool hasReceipt;
         public string receipt;
         public string transactionID;
-        public ProductType productType;
-
-        public AppcoinsProduct (ProductDefinition def)
-        {
-            skuID = def.id;
-            productType = def.type;
-        }
+        public AppcoinsProductType productType;
 
         public bool Equals(AppcoinsProduct p)
         {

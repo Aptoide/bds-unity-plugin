@@ -1,12 +1,33 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-
 using UnityEngine;
-using UnityEngine.Purchasing;
 
 namespace Appcoins.Purchasing
 {
+    public enum AppcoinsPurchaseProcessingResult
+    {
+        Complete,
+        Pending
+    }
+
+    public enum AppcoinsInitializationFailureReason
+    {
+        PurchasingUnavailable,
+        NoProductsAvailable,
+        AppNotKnown
+    }
+
+    public enum AppcoinsPurchaseFailureReason
+    {
+        PurchasingUnavailable,
+        ExistingPurchasePending,
+        ProductUnavailable,
+        SignatureInvalid,
+        UserCancelled,
+        PaymentDeclined,
+        DuplicateTransaction,
+        Unknown
+    }
+ 
     public class AppcoinsPurchasing : MonoBehaviour
     {
         public const string APPCOINS_PREFAB = "AppcoinsPurchasing";
@@ -37,7 +58,7 @@ namespace Appcoins.Purchasing
 
         //  Create an instance of this class. Add an AppcoinsStore listener and
         //  get products definitions from ConfigurationBuilder
-        public void Initialize(IAppcoinsStoreListener listener, ConfigurationBuilder builder)
+        public void Initialize(IAppcoinsStoreListener listener, AppcoinsConfigurationBuilder builder)
         {
             try
             {
@@ -78,17 +99,17 @@ namespace Appcoins.Purchasing
         {
             Debug.Log("Called OnInitializeFail with reaason " + error);
 
-            InitializationFailureReason reason = InitializationFailureReasoFromString(error);
+            AppcoinsInitializationFailureReason reason = InitializationFailureReasoFromString(error);
 
             _listener.OnInitializeFailed(reason);
         }
 
-        InitializationFailureReason InitializationFailureReasoFromString(string errorStr) {
-            InitializationFailureReason reason = InitializationFailureReason.PurchasingUnavailable;
+        AppcoinsInitializationFailureReason InitializationFailureReasoFromString(string errorStr) {
+            AppcoinsInitializationFailureReason reason = AppcoinsInitializationFailureReason.PurchasingUnavailable;
 
             if (errorStr.Contains("Problem setting up in-app billing"))
             {
-                reason = InitializationFailureReason.PurchasingUnavailable;
+                reason = AppcoinsInitializationFailureReason.PurchasingUnavailable;
             }
 
             return reason;
@@ -116,14 +137,14 @@ namespace Appcoins.Purchasing
                 _currentPurchaseProduct = product;
 
                 switch (product.productType) {
-                    case ProductType.Consumable:
+                    case AppcoinsProductType.Consumable:
                         instance.Call("consumePurchase", skuID);
                         break;
-                    case ProductType.NonConsumable:
+                    case AppcoinsProductType.NonConsumable:
                         //Won't consume so skip right through to success
                         OnPurchaseSuccess(skuID);
                         break;
-                    case ProductType.Subscription:
+                    case AppcoinsProductType.Subscription:
                         Debug.LogError("We still don't support Subscriptions! Sorry about that...");
                         break;
                 }
@@ -152,14 +173,14 @@ namespace Appcoins.Purchasing
                 Debug.LogError("No IStoreController set up!");
             }
 
-            PurchaseFailureReason failureReason = PurchaseFailureReasonFromString(error);
+            AppcoinsPurchaseFailureReason failureReason = PurchaseFailureReasonFromString(error);
             _listener.OnPurchaseFailed(_currentPurchaseProduct, failureReason);
 
             _currentPurchaseProduct = null;
         }
 
-        PurchaseFailureReason PurchaseFailureReasonFromString(string error) {
-            PurchaseFailureReason reason = PurchaseFailureReason.Unknown;
+        AppcoinsPurchaseFailureReason PurchaseFailureReasonFromString(string error) {
+            AppcoinsPurchaseFailureReason reason = AppcoinsPurchaseFailureReason.Unknown;
 
     //        String[] iab_msgs = ("0:OK/1:User Canceled/2:Unknown/"
     //+ "3:Billing Unavailable/4:Item unavailable/"
@@ -178,23 +199,23 @@ namespace Appcoins.Purchasing
 
             if (error.Contains("User cancelled", StringComparison.OrdinalIgnoreCase)) 
             {
-                reason = PurchaseFailureReason.UserCancelled;
+                reason = AppcoinsPurchaseFailureReason.UserCancelled;
             } 
             else if (error.Contains("Unknown error", StringComparison.OrdinalIgnoreCase))
             {
-                reason = PurchaseFailureReason.Unknown;
+                reason = AppcoinsPurchaseFailureReason.Unknown;
             }
             else if (error.Contains("Purchase signature verification failed", StringComparison.OrdinalIgnoreCase))
             {
-                reason = PurchaseFailureReason.SignatureInvalid;
+                reason = AppcoinsPurchaseFailureReason.SignatureInvalid;
             }
             else if (error.Contains("Unable to buy item", StringComparison.OrdinalIgnoreCase))
             {
-                reason = PurchaseFailureReason.ProductUnavailable;
+                reason = AppcoinsPurchaseFailureReason.ProductUnavailable;
             }
             else if (error.Contains("Unknown error", StringComparison.OrdinalIgnoreCase))
             {
-                reason = PurchaseFailureReason.Unknown;
+                reason = AppcoinsPurchaseFailureReason.Unknown;
             }
 
             return reason;
