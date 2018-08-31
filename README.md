@@ -22,11 +22,15 @@ To successfully run the project you need to:
 
 2. Open the example scene.
 
-3. Change the package name to: "com.appcoins.sample"
+3. Make sure you are on the Android platform. Go to File -> Build Settings, select Android and then switch platform.
+
+![platform](Screenshots/platform.png)
+
+5. On the Build Settings screen click "Player Settings...". Change the package name to: "com.appcoins.sample"
 
 ![packageName](Screenshots/packageName.png)
 
-4. Build and run for Android.
+6. Build and run for Android.
 
 3. If everything goes well you should see the message:
 "OnInitialized: PASS" on the top of the phone screen. This means that you have everything correctly setup. You can try the consumable and non-consumable purchases to also see that they work.
@@ -35,7 +39,7 @@ To successfully run the project you need to:
 
 ![message](Screenshots/message.png)
 
-4. Insert these snippets into your logic class
+8. Insert these snippets into your logic class
 
 4. Add these imports
 ```
@@ -88,7 +92,7 @@ To successfully run the project you need to:
         }
 ```
 
-7. Create an instance of the prefab _AppcoinsPurchasing_ located on the Prefabs folder.
+15. Create an instance of the prefab _AppcoinsPurchasing_ located on the Prefabs folder.
 
 8. Fill it in with the appropriate values for _Developer Wallet Address_ and _Developer BDS Public Key_. (The default ones are working for the sample app)
 
@@ -125,13 +129,13 @@ On the _Player Settings_ window:
 
 You should have your game running on the phone!
 
-**Unity 2018.1.X and below (till Unity 5.X)**
+**Unity 2018.1.X and below (till Unity 5.6)**
 
 1. Close the _Player Settings_ window
 
 2. On the top bar click _AppCoins_
 
-3. Click _Custom Android Build_
+3. Click _Android Custom Build_
 
 4. This popup will show up
 
