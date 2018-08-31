@@ -18,37 +18,7 @@ To successfully run the project you need to:
 
 1. Register on [BDS](https://blockchainds.com/)
 
-2. Open your project on Unity and make sure that you have Unity In-App Purchasing service enabled. If you do, skip the "Enabling Unity In-App Purchasing service for your game" section.
-
-## Enabling Unity In-App Purchasing service for your game
-1. Press the cloud icon on the top right corner of the Unity window. This will open the Services panel.
-
-![cloudIcon](Screenshots/cloudIcon.png)
-
-2. If you don't have a Project ID pick an organization and click "Create".
-
-![projectID](Screenshots/projectID.png)
-
-3. Now scroll down until you find In-App Purchasing and click it.
-
-![In-App Purchasing](Screenshots/iap.png)
-
-4. On the In-App Purchasing panel, click the black toggle button or the enable button to enable the service.
-
-![iapPanel](Screenshots/iapPanel.png)
-
-5. Answer the COPPA compliance question accordingly.
-
-6. On the welcome screen press "Import". This will start Unity's IAP package import process. Press "Import" on the new window that pops up. **NOTE:** During this process you'll be notified of an API Update. If you have sensitive data, backup your code and then click "I've made a backup, go ahead".
-
-![packageImport](Screenshots/packageImport.png)
-
-7. On the welcome screen, the "Import" button should've changed to "Reimport" and a message saying "Unity IAP is up to date" should be displaying. If this isn't showing, try reloading the Services window again or pressing "Import" again and then cancelling.
-
-![reimport](Screenshots/reimport.png)
-
-## Integrating the plugin into your game (Unity IAP enabled)
-1. Download the plugin package [BDS_AppCoins_Unity_Plugin.unitypackage](https://github.com/Aptoide/appcoins-unity-plugin/blob/develop/BDS_AppCoins_Unity_Plugin.unitypackage) file and open the package in your Unity project (double click the file or in Unity go to Assets -> Import Package -> Custom Package.... and find the file you just downloaded). Make sure to import the example folder.
+1. Download the plugin package corresponding to your Unity version. You can find them on the latest release [here](https://github.com/Aptoide/bds-unity-plugin/releases).  Open the package in your Unity project (double click the file or in Unity go to Assets -> Import Package -> Custom Package.... and find the file you just downloaded). Make sure to import the example folder.
 
 2. Open the example scene.
 

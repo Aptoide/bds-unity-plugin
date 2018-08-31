@@ -1,0 +1,86 @@
+// Appcoins mainTemplate merged
+buildscript {
+  repositories {
+    jcenter()
+    google()
+  }
+
+  dependencies {
+    classpath 'com.android.tools.build:gradle:3.0.1'
+  }
+}
+
+allprojects {
+  repositories {
+    google()
+    jcenter()
+    flatDir {
+      dirs 'libs'
+    }
+  }
+}
+
+apply plugin: 'com.android.application'
+
+dependencies {
+  implementation fileTree(dir: 'libs', excludes: ['com.android.support.support-annotations*.jar'], include: ['*.jar'])
+  compile group: 'io.reactivex.rxjava2', name: 'rxjava', version: '2.2.1'
+      implementation(name: 'appcoinsunity-debug', ext:'aar')
+
+}
+
+android {
+  compileSdkVersion 27
+  buildToolsVersion '27.0.3'
+
+  defaultConfig {
+    minSdkVersion 21
+    targetSdkVersion 27
+    applicationId 'com.appcoins.sample'
+    ndk {
+      abiFilters 'armeabi-v7a', 'x86'
+    }
+    versionCode 2
+    versionName '0.1'
+    multiDexEnabled true
+    compileOptions {
+    sourceCompatibility 1.8
+    targetCompatibility 1.8
+    }
+  }
+
+  lintOptions {
+    abortOnError false
+  }
+
+  aaptOptions {
+        noCompress '.unity3d', '.ress', '.resource', '.obb'
+    }
+
+    
+
+  buildTypes {
+    debug {
+      minifyEnabled false
+      useProguard false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-unity.txt'
+      jniDebuggable true
+      resValue "string", "APPCOINS_PREFAB", "AppcoinsPurchasing"
+    }
+    release {
+      minifyEnabled false
+      useProguard false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-unity.txt'
+      resValue "string", "APPCOINS_PREFAB", "AppcoinsPurchasing"
+
+      
+            signingConfig signingConfigs.debug
+    }
+    }
+
+    packagingOptions {
+        doNotStrip '*/armeabi-v7a/*.so'
+        doNotStrip '*/x86/*.so'
+    }
+
+}
