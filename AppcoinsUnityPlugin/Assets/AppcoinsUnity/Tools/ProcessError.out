@@ -1,14 +1,19 @@
+/Users/aptoide/Desktop/build/TrivialTest/src/main/AndroidManifest.xml:4:58-89 Error:
+	Attribute application@icon value=(@mipmap/app_icon) from AndroidManifest.xml:4:58-89
+	is also present at [:appcoinsunity-debug:] AndroidManifest.xml:30:9-42 value=(@drawable/app_icon).
+	Suggestion: add 'tools:replace="android:icon"' to <application> element at AndroidManifest.xml:4:3-16:17 to override.
 
-Exception occurred while executing:
-java.lang.IllegalArgumentException: Bad component name: com.appcoins.sample.UnityPlayerActivity
-	at android.content.Intent.parseCommandArgs(Intent.java:6509)
-	at com.android.server.am.ActivityManagerShellCommand.makeIntent(ActivityManagerShellCommand.java:278)
-	at com.android.server.am.ActivityManagerShellCommand.runStartActivity(ActivityManagerShellCommand.java:328)
-	at com.android.server.am.ActivityManagerShellCommand.onCommand(ActivityManagerShellCommand.java:141)
-	at android.os.ShellCommand.exec(ShellCommand.java:96)
-	at com.android.server.am.ActivityManagerService.onShellCommand(ActivityManagerService.java:15014)
-	at android.os.Binder.shellCommand(Binder.java:594)
-	at android.os.Binder.onTransact(Binder.java:492)
-	at android.app.IActivityManager$Stub.onTransact(IActivityManager.java:4243)
-	at com.android.server.am.ActivityManagerService.onTransact(ActivityManagerService.java:2919)
-	at android.os.Binder.execTransact(Binder.java:697)
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':processReleaseManifest'.
+> Manifest merger failed : Attribute application@icon value=(@mipmap/app_icon) from AndroidManifest.xml:4:58-89
+  	is also present at [:appcoinsunity-debug:] AndroidManifest.xml:30:9-42 value=(@drawable/app_icon).
+  	Suggestion: add 'tools:replace="android:icon"' to <application> element at AndroidManifest.xml:4:3-16:17 to override.
+
+* Try:
+Run with --stacktrace option to get the stack trace. Run with --info or --debug option to get more log output. Run with --scan to get full insights.
+
+* Get more help at https://help.gradle.org
+
+BUILD FAILED in 2s

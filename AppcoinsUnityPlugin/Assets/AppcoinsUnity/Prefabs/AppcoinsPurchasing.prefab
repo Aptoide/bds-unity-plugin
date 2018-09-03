@@ -49,7 +49,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1126314879634292}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -495513755, guid: bb8523f1d4f8c40b6b580a60417f79ef, type: 3}
+  m_Script: {fileID: -495513755, guid: 8762bd31d744f4c96842e6a0d89d488c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   onInitializeSuccess:
@@ -71,9 +71,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1126314879634292}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -481691865, guid: bb8523f1d4f8c40b6b580a60417f79ef, type: 3}
+  m_Script: {fileID: -481691865, guid: 8762bd31d744f4c96842e6a0d89d488c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _developerWalletAddress: 0xa43646ed0ece7595267ed7a2ff6f499f9f10f3c7
-  _developerBDSPublicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyEt94j9rt0UvpkZ2jPMZZ16yUrBOtjpIQCWi/F3HN0+iwSAeEJyDw7xIKfNTEc0msm+m6ud1kJpLK3oCsK61syZ8bYQlNZkUxTaWNof1nMnbw3Xu5nuYMuowmzDqNMWg5jNooy6oxwIgVcdvbyGi5RIlxqbo2vSAwpbAAZE2HbUrysKhLME7IOrdRR8MQbSbKEy/9MtfKz0uZCJGi9h+dQb0b69H7Yo+/BN/ayBSJzOPlaqmiHK5lZsnZhK+ixpB883fr+PgSczU7qGoktqoe6Fs+nhk9bLElljCs5ZIl9/NmOSteipkbplhqLY7KwapDmhrtBgrTetmnW9PU/eCWQIDAQAB
+  _developerBDSPublicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAw
   _shouldLog: 1

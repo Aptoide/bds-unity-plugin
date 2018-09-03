@@ -1,11 +1,6 @@
 #!/bin/sh
 osascript -e 'activate application "/Applications/Utilities/Terminal.app"'
-cd '/Users/nunomonteiro/Documents/GitHub/bds-unity-plugin/AppcoinsUnityPlugin/and/TrivialTest'
-if [ "$('/Users/nunomonteiro/Library/Android/sdk/platform-tools/adb' get-state)" == "device" ]
-then
-'/Users/nunomonteiro/Library/Android/sdk/platform-tools/adb' shell am start -n 'com.appcoins.sample.UnityPlayerActivity' 2>&1 2>'/Users/nunomonteiro/Documents/GitHub/bds-unity-plugin/AppcoinsUnityPlugin/Assets/AppcoinsUnity/Tools/ProcessError.out'
-else
-echo error: no usb device found > '/Users/nunomonteiro/Documents/GitHub/bds-unity-plugin/AppcoinsUnityPlugin/Assets/AppcoinsUnity/Tools/ProcessError.out'
-fi
-echo 'done' > '/Users/nunomonteiro/Documents/GitHub/bds-unity-plugin/AppcoinsUnityPlugin/Assets/AppcoinsUnity/Tools/ProcessCompleted.out'
+cd '/Users/aptoide/Desktop/build/TrivialTest'
+'/Applications/Android Studio.app/Contents/gradle/gradle-4.4/bin/gradle' assembleRelease 2>&1 2>'/Users/aptoide/Documents/GitHub/bds-unity-plugin/AppcoinsUnityPlugin/Assets/AppcoinsUnity/Tools/ProcessError.out'
+echo 'done' > '/Users/aptoide/Documents/GitHub/bds-unity-plugin/AppcoinsUnityPlugin/Assets/AppcoinsUnity/Tools/ProcessCompleted.out'
 exit
