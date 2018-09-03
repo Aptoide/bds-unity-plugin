@@ -19,13 +19,13 @@ public class PurchaseActivity extends Activity {
 
     public static PurchaseActivity activity;
 
-    //TODO actually get the prefab name from the resources
-    String appcoinsPrefabName = "AppcoinsPurchasing";//getResources().getString(R.string.APPCOINS_PREFAB);
+    String appcoinsPrefabName;
 
     // Callback for when a purchase is finished
     IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener =
             new IabHelper.OnIabPurchaseFinishedListener() {
                 public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
+
                     Log.d(TAG, "Purchase finished: " + result + ", purchase: " + purchase);
 
                     // if we were disposed of in the meantime, quit.
@@ -61,6 +61,8 @@ public class PurchaseActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         activity = this;
+
+        appcoinsPrefabName = getResources().getString(R.string.APPCOINS_PREFAB);
 
         // print debug message to logcat
         Log.d(TAG, "Activity began.");

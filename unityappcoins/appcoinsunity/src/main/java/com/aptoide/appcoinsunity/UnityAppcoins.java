@@ -21,8 +21,7 @@ import java.util.List;
 
 public class UnityAppcoins  {
 
-    //TODO actually get the prefab name from the resources
-    String appcoinsPrefabName = "AppcoinsPurchasing";//getResources().getString(R.string.APPCOINS_PREFAB);
+    String appcoinsPrefabName = UnityPlayer.currentActivity.getResources().getString(R.string.APPCOINS_PREFAB);
     static final int RC_REQUEST = 10001;
 
     // Listener that's called when we finish querying the items and subscriptions we own
