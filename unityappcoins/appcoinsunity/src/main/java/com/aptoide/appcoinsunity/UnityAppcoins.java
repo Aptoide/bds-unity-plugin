@@ -159,7 +159,6 @@ public class UnityAppcoins  {
     public static final String TAG = "UnityAppcoinsBDS";
     // (arbitrary) request code for the purchase flow
     private static int REQUEST_CODE = 1337;
-    private static  String developerAddress = "0xa43646ed0ece7595267ed7a2ff6f499f9f10f3c7";
     private static  String developerBDSPublicKey = "CONSTRUCT_YOUR_BDS_KEY_AND_PLACE_IT_HERE";
     private static  boolean shouldLog = false;
     public static UnityAppcoins instance;
@@ -175,7 +174,7 @@ public class UnityAppcoins  {
     }
 
     public static void setDeveloperAddress(String address) {
-        developerAddress = address;
+        Application.setDeveloperAddress(address);
     }
 
     public static void setDeveloperBDSPublicKey(String key) {
