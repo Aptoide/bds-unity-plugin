@@ -33,7 +33,7 @@ public class Logic : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        DisablePurchaseButtons();
+        //DisablePurchaseButtons();
 
         _gasAmount = PlayerPrefs.GetInt(GAS_KEY, 0);
         UpdateGasLabel();

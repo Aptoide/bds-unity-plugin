@@ -82,6 +82,7 @@ public class UnityAppcoins  {
 //                    }
 
                     Log.d(TAG, "Initial inventory query finished.");
+                    UnityPlayer.UnitySendMessage(appcoinsPrefabName,"OnInitializeSuccess","");
                 }
             };
 
@@ -126,7 +127,7 @@ public class UnityAppcoins  {
                         complain(error);
                         UnityPlayer.UnitySendMessage(appcoinsPrefabName,"OnInitializeFail",error);
                     } finally {
-                        UnityPlayer.UnitySendMessage(appcoinsPrefabName,"OnInitializeSuccess","");
+
                     }
                 }
 
@@ -185,6 +186,22 @@ public class UnityAppcoins  {
         shouldLog = val;
     }
 
+    public static boolean hasWalletInstalled() {
+        boolean hasWallet = WalletUtils.hasWalletInstalled(UnityPlayer.currentActivity);
+        return hasWallet;
+    }
+
+    public static void promptWalletInstall() {
+        Log.d("UnityAppCoins","Prompting to install wallet");
+        WalletUtils.promptToInstallWallet(UnityPlayer.currentActivity,
+                UnityPlayer.currentActivity.getString(R.string.install_wallet_from_ads))
+                .toCompletable()
+                .doOnSubscribe(disposable1 -> {})
+                .doOnComplete(() -> {})
+                .subscribe(() -> {
+                }, Throwable::printStackTrace);
+    }
+
     public void CreateIABHelper() {
 
         /* base64EncodedPublicKey should be YOUR APPLICATION'S PUBLIC KEY
@@ -216,23 +233,11 @@ public class UnityAppcoins  {
         // enable debug logging (for a production application, you should set this to false).
         mHelper.enableDebugLogging(shouldLog);
 
-
-        if (WalletUtils.hasWalletInstalled(UnityPlayer.currentActivity)) {
-            // Start setup. This is asynchronous and the specified listener
-            // will be called once setup completes.
-            mHelper.startSetup(
-                    mSetupFinishedListener
-            );
-        } else {
-            Log.d("UnityAppCoins","Prompting to install wallet");
-            WalletUtils.promptToInstallWallet(UnityPlayer.currentActivity,
-                    UnityPlayer.currentActivity.getString(R.string.install_wallet_from_ads))
-                    .toCompletable()
-                    .doOnSubscribe(disposable1 -> {})
-                    .doOnComplete(() -> {})
-                    .subscribe(() -> {
-                    }, Throwable::printStackTrace);
-        }
+        // Start setup. This is asynchronous and the specified listener
+        // will be called once setup completes.
+        mHelper.startSetup(
+                mSetupFinishedListener
+        );
     }
 
     public void makePurchase(String skuID) {
@@ -240,6 +245,7 @@ public class UnityAppcoins  {
     }
 
     public void makePurchase(String skuID, String payload) {
+
         Log.d("UnityAppCoins", "[PrepareBuy] Calling makePurchase with skuid" + skuID + " and payload " + payload);
 
         Intent shareIntent = new Intent();
