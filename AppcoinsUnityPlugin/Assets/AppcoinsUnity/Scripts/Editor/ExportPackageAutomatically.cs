@@ -98,8 +98,6 @@ public class ExportPackageAutomatically : ScriptableObject
             packagePath = Application.dataPath +
                                         "/../../../bds-unity-plugin/" + 
                                         PackageInfo.GetPackageName() + ".unitypackage";
-
-            ExportPackageOptions options = ExportPackageOptions.Recurse;
             AssetDatabase.ExportPackage(filesToExport.ToArray(), packagePath, options);            
         }
 
