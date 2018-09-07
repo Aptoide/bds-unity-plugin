@@ -63,5 +63,13 @@ task copyAarToUnity {
         from 'build/outputs/aar/appcoinsunity-debug.aar'
         into "../../AppcoinsUnityPlugin/Assets/Plugins/Android"
     }
+    copy {
+        from 'build/outputs/aar/appcoinsunity-debug.aar'
+        into "../../../bds-unity-plugin-2017/AppcoinsUnityPlugin/Assets/Plugins/Android"
+    }
+    copy {
+        from 'build/outputs/aar/appcoinsunity-debug.aar'
+        into "../../../bds-unity-plugin-5_6/AppcoinsUnityPlugin/Assets/Plugins/Android"
+    }
 }
 

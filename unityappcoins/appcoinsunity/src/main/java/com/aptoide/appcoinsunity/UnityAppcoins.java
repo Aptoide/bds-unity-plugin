@@ -11,6 +11,7 @@ import com.aptoide.appcoinsunity.util.PayloadHelper;
 import com.aptoide.appcoinsunity.util.Purchase;
 import com.aptoide.appcoinsunity.util.WalletUtils;
 import com.unity3d.player.UnityPlayer;
+import com.unity3d.player.UnityPlayerActivity;
 
 import java.util.List;
 
@@ -185,6 +186,21 @@ public class UnityAppcoins  {
         shouldLog = val;
     }
 
+    public static boolean hasWalletInstalled() {
+        return WalletUtils.hasWalletInstalled(UnityPlayer.currentActivity);
+    }
+
+    public static void promptWalletInstall() {
+        Log.d("UnityAppCoins","Prompting to install wallet");
+        WalletUtils.promptToInstallWallet(UnityPlayer.currentActivity,
+                UnityPlayer.currentActivity.getString(R.string.install_wallet_from_ads))
+                .toCompletable()
+                .doOnSubscribe(disposable1 -> {})
+                .doOnComplete(() -> {})
+                .subscribe(() -> {
+                }, Throwable::printStackTrace);
+    }
+
     public void CreateIABHelper() {
 
         /* base64EncodedPublicKey should be YOUR APPLICATION'S PUBLIC KEY
@@ -216,23 +232,11 @@ public class UnityAppcoins  {
         // enable debug logging (for a production application, you should set this to false).
         mHelper.enableDebugLogging(shouldLog);
 
-
-        if (WalletUtils.hasWalletInstalled(UnityPlayer.currentActivity)) {
-            // Start setup. This is asynchronous and the specified listener
-            // will be called once setup completes.
-            mHelper.startSetup(
-                    mSetupFinishedListener
-            );
-        } else {
-            Log.d("UnityAppCoins","Prompting to install wallet");
-            WalletUtils.promptToInstallWallet(UnityPlayer.currentActivity,
-                    UnityPlayer.currentActivity.getString(R.string.install_wallet_from_ads))
-                    .toCompletable()
-                    .doOnSubscribe(disposable1 -> {})
-                    .doOnComplete(() -> {})
-                    .subscribe(() -> {
-                    }, Throwable::printStackTrace);
-        }
+        // Start setup. This is asynchronous and the specified listener
+        // will be called once setup completes.
+        mHelper.startSetup(
+                mSetupFinishedListener
+        );
     }
 
     public void makePurchase(String skuID) {

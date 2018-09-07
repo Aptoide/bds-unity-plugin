@@ -93,6 +93,14 @@ public class ExportPackageAutomatically : ScriptableObject
         ExportPackageOptions options = ExportPackageOptions.Recurse;
         AssetDatabase.ExportPackage(filesToExport.ToArray(), packagePath, options);
 
+        //Check if we need to copy the exported package to the main repo
+        if (PackageInfo.ShouldCopyToMainRepo()) {
+            packagePath = Application.dataPath +
+                                        "/../../../bds-unity-plugin/" + 
+                                        PackageInfo.GetPackageName() + ".unitypackage";
+            AssetDatabase.ExportPackage(filesToExport.ToArray(), packagePath, options);            
+        }
+
         UnityEngine.Debug.Log("Export done successfully");
     }
 
