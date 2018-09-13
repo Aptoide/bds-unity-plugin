@@ -7,10 +7,13 @@ using UnityEngine.UI;
 
 using Appcoins.Purchasing;
 
-public class Logic : MonoBehaviour {
+public class Logic : MonoBehaviour, IPayloadValidator {
 
     [SerializeField]
     private Text _gasTxt;
+
+    [SerializeField]
+    private AppcoinsPurchasing _appcoins;
 
     [SerializeField]
     private Purchaser _purchaser;
@@ -49,6 +52,8 @@ public class Logic : MonoBehaviour {
         _purchaser.AddProduct(kProductIDNonConsumable, AppcoinsProductType.NonConsumable);
 
         _purchaser.InitializePurchasing();
+
+        _appcoins.SetupCustomValidator(this);
     }
 
     private void OnInitializeSuccess() {
@@ -100,6 +105,11 @@ public class Logic : MonoBehaviour {
     {
         _btnBuyGas.enabled = false;
         _btnBuyNoAds.enabled = false;
+    }
+
+    public bool IsValidPayload(string payload) {
+        Debug.Log("Custom payload validation in place! Payload is " + payload);
+        return true;
     }
 
 }

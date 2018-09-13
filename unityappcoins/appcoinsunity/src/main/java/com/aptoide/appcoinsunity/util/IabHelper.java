@@ -363,6 +363,21 @@ public class IabHelper {
   }
 
   /**
+   * Callback that notifies when a purchase has finished validating.
+   */
+  public interface OnPayloadValidationFinishedListener {
+    /**
+     * Called to notify that an in-app purchase payload validation finished. If the validation was successful,
+     * then the sku parameter specifies which item was purchased. If the purchase failed,
+     * the sku and extraData parameters may or may not be null, depending on how far the purchase
+     * process went.
+     *
+     * @param success The result of the validation.
+     */
+    void onValidationFinished(boolean success, Purchase purchase);
+  }
+
+  /**
    * Callback that notifies when a purchase is finished.
    */
   public interface OnIabPurchaseFinishedListener {
