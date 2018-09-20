@@ -697,6 +697,12 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1041633149}
   m_CullTransparentMesh: 0
+--- !u!114 &1303247230 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114691361896027012, guid: 8faf33d699f5e41f3874b85eff97ff9d,
+    type: 2}
+  m_PrefabInternal: {fileID: 212861375}
+  m_Script: {fileID: -481691865, guid: 3bc53a99d326f44ea832b81177ec4dbe, type: 3}
 --- !u!1 &1332765290
 GameObject:
   m_ObjectHideFlags: 0
@@ -725,6 +731,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gasTxt: {fileID: 1475850033}
+  _appcoins: {fileID: 1303247230}
   _purchaser: {fileID: 185854024}
   _adsBar: {fileID: 1625069559}
   _btnBuyGas: {fileID: 1502594002}

@@ -59,9 +59,23 @@ task copyAarToUnity {
 //        from 'build/outputs/aar/appcoinsunity-release.aar'
 //        into "../../AppcoinsUnityPlugin/Assets/Plugins/Android"
 //    }
+
+    //unity 2018
     copy {
         from 'build/outputs/aar/appcoinsunity-debug.aar'
         into "../../AppcoinsUnityPlugin/Assets/Plugins/Android"
+    }
+
+    //unity 2017
+    copy {
+        from 'build/outputs/aar/appcoinsunity-debug.aar'
+        into "../../../bds-unity-plugin-2017/AppcoinsUnityPlugin/Assets/Plugins/Android"
+    }
+
+    //unity 5.6
+    copy {
+        from 'build/outputs/aar/appcoinsunity-debug.aar'
+        into "../../../bds-unity-plugin-5_6/AppcoinsUnityPlugin/Assets/Plugins/Android"
     }
 }
 
