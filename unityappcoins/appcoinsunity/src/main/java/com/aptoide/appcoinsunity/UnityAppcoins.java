@@ -11,6 +11,7 @@ import com.aptoide.appcoinsunity.util.PayloadHelper;
 import com.aptoide.appcoinsunity.util.Purchase;
 import com.aptoide.appcoinsunity.util.WalletUtils;
 import com.unity3d.player.UnityPlayer;
+import com.unity3d.player.UnityPlayerActivity;
 
 import java.util.List;
 
@@ -212,13 +213,8 @@ public class UnityAppcoins  {
 
     public static void promptWalletInstall() {
         Log.d("UnityAppCoins","Prompting to install wallet");
-        WalletUtils.promptToInstallWallet(UnityPlayer.currentActivity,
-                UnityPlayer.currentActivity.getString(R.string.install_wallet_from_ads))
-                .toCompletable()
-                .doOnSubscribe(disposable1 -> {})
-                .doOnComplete(() -> {})
-                .subscribe(() -> {
-                }, Throwable::printStackTrace);
+        WalletUtils.showWalletInstallDialog(UnityPlayer.currentActivity,
+                UnityPlayer.currentActivity.getString(R.string.install_wallet_from_ads));
     }
 
     public void CreateIABHelper() {

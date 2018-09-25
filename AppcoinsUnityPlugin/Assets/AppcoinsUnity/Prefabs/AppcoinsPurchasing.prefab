@@ -49,7 +49,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 1268422919719280}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -495513755, guid: 3bc53a99d326f44ea832b81177ec4dbe, type: 3}
+  m_Script: {fileID: -481691865, guid: 7b2cb523d96074b5c99309d20eaeea1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _developerWalletAddress: 0xd133fab7abc4711fd328c4aefbf04256a79b1b40
+  _developerBDSPublicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyEt94j9rt0UvpkZ2jPMZZ16yUrBOtjpIQCWi
+  _shouldLog: 1
+--- !u!114 &114691361896027012
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1268422919719280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -495513755, guid: 7b2cb523d96074b5c99309d20eaeea1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   onInitializeSuccess:
@@ -63,17 +77,3 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   _statusText: {fileID: 0}
---- !u!114 &114691361896027012
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1268422919719280}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -481691865, guid: 3bc53a99d326f44ea832b81177ec4dbe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _developerWalletAddress: 0xd133fab7abc4711fd328c4aefbf04256a79b1b40
-  _developerBDSPublicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyEt94j9rt0UvpkZ2jPMZZ16yUrBOtjpIQCWi/F3HN0+iwSAeEJyDw7xIKfNTEc0msm+m6ud1kJpLK3oCsK61syZ8bYQlNZkUxTaWNof1nMnbw3Xu5nuYMuowmzDqNMWg5jNooy6oxwIgVcdvbyGi5RIlxqbo2vSAwpbAAZE2HbUrysKhLME7IOrdRR8MQbSbKEy/9MtfKz0uZCJGi9h+dQb0b69H7Yo+/BN/ayBSJzOPlaqmiHK5lZsnZhK+ixpB883fr+PgSczU7qGoktqoe6Fs+nhk9bLElljCs5ZIl9/NmOSteipkbplhqLY7KwapDmhrtBgrTetmnW9PU/eCWQIDAQAB
-  _shouldLog: 1
