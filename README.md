@@ -117,6 +117,7 @@ Go to the build menu (File -> Build Settings)
 Now click _Player Settings_.
 
 On the _Player Settings_ window:
+
 2. Click the other settings panel
 
 3. Make sure you change the package name to your liking.
@@ -169,6 +170,7 @@ You should have your game running on the phone!
 2. Open the Publishing Settings tab
 
 If you already have a keystore:
+
 3. Tick "Use Existing Keystore" and then click "Browse keystore" to fetch it.
 
 4. You have to provide the keystore password to allow Unity to read the key aliases.
@@ -180,6 +182,7 @@ If you already have a keystore:
 6. You're done!
 
 If you don't have a key already:
+
 7. Tick "Create new keystore..." and then click "Browse Keystore"
 
 8. Now pick the path where the key will be created
