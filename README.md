@@ -106,6 +106,16 @@ Disable purchase buttons if purchasing is not initialized yet.
 
 Disable purchase buttons for already owned non-consumable buttons.
 
+## Versioning
+The priority of BDS and partners is to provide a good user experience to the user of Android apps and games.
+
+BDS strongly recommends to use:
+- Package ID: the same as in Google Play (e.g. “com.example.myapp”)
+- Developer's signature: the same as in Google Play
+- Vercode: higher than Google Play, by adding an extra digit - different than 0- in the left (e.g.: vercode Play=“573”, vercode BDS=“1573”)
+
+To know more about this please check the [BDS FAQ](https://blockchainds.com/faq)
+
 ## To build the project
 
 Go to the build menu (File -> Build Settings)
