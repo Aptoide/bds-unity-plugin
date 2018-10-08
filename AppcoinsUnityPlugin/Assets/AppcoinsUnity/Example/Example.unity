@@ -258,9 +258,9 @@ Transform:
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114023370572500150, guid: 8faf33d699f5e41f3874b85eff97ff9d,
     type: 2}
-  m_PrefabInternal: {fileID: 212861375}
+  m_PrefabInternal: {fileID: 267513326}
   m_Script: {fileID: -495513755, guid: 3bc53a99d326f44ea832b81177ec4dbe, type: 3}
---- !u!1001 &212861375
+--- !u!1001 &267513326
 Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -304,11 +304,6 @@ Prefab:
       propertyPath: _statusText
       value: 
       objectReference: {fileID: 75120600}
-    - target: {fileID: 114691361896027012, guid: 8faf33d699f5e41f3874b85eff97ff9d,
-        type: 2}
-      propertyPath: _useMainNet
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8faf33d699f5e41f3874b85eff97ff9d, type: 2}
   m_IsPrefabAsset: 0
@@ -706,7 +701,7 @@ CanvasRenderer:
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114691361896027012, guid: 8faf33d699f5e41f3874b85eff97ff9d,
     type: 2}
-  m_PrefabInternal: {fileID: 212861375}
+  m_PrefabInternal: {fileID: 267513326}
   m_Script: {fileID: -481691865, guid: 3bc53a99d326f44ea832b81177ec4dbe, type: 3}
 --- !u!1 &1332765290
 GameObject:
