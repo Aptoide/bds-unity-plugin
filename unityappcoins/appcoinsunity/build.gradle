@@ -11,6 +11,8 @@ android {
         //buildConfigField "String", "IAB_PERMISSION", '"com.appcoins.BILLING"'
         buildConfigField "String", "IAB_BIND_ACTION", '"com.appcoins.wallet.iab.action.BIND"'
         buildConfigField "String", "IAB_BIND_PACKAGE", '"com.appcoins.wallet"'
+        buildConfigField "String", "IAB_DEV_BIND_ACTION", '"com.appcoins.wallet.iab.action.BIND"'
+        buildConfigField "String", "IAB_DEV_BIND_PACKAGE", '"com.appcoins.wallet"'
         buildConfigField "String", "IAB_PERMISSION", '"com.appcoins.BILLING"'
         buildConfigField "String", "IAB_KEY", '"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA4OioOpjKnev37o580YhOlQCbYlA62xee0B3O/JQ/Or9CuLGPC06/5CTB6sRbljEPccVBuYPQFIbJAw9UYPfQowLirjML1b2XW+W1RHxxSfmqSAbYvICcBuYY7C4hGK+3qrDIY47X+t+jSsgoKTz49Ag3bb2s7fQoMg414eMZrmq/USd1/lvUwFx2ldesUoIZ6mTPoJTmX0idAYK1eCAUjhX/gFG+7orf8jafw3B9k1QfbFtoDGCw6L3GQ+8VXcXy5MZykVdBzh6PuLzDEGRrM4GAX7rJ+iJVdHiBneOsWN3wvWALUaeLFVN22iiSb9PIJfFOw6TyEISoRUlCNf1NYwIDAQAB"'
         buildConfigField "String", "IAB_UPDATE_ACTION", '" "'

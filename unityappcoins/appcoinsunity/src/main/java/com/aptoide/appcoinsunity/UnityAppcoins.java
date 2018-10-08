@@ -173,6 +173,7 @@ public class UnityAppcoins  {
     // (arbitrary) request code for the purchase flow
     private static int REQUEST_CODE = 1337;
     private static  String developerBDSPublicKey = "CONSTRUCT_YOUR_BDS_KEY_AND_PLACE_IT_HERE";
+    private static  boolean _useMainNet = true;
     private static  boolean shouldLog = false;
     public static UnityAppcoins instance;
 
@@ -203,6 +204,11 @@ public class UnityAppcoins  {
 
     public static void setLogging(boolean val) {
         shouldLog = val;
+    }
+
+    public static void setUseMainNet(boolean val) {
+        Log.d("UnityAppCoins","Setting use main net: " + val);
+        _useMainNet = val;
     }
 
     public static boolean hasWalletInstalled() {
@@ -245,7 +251,7 @@ public class UnityAppcoins  {
         }
 
         // Create the helper, passing it our context and the public key to verify signatures with
-        mHelper = new IabHelper(UnityPlayer.currentActivity, base64EncodedPublicKey);
+        mHelper = new IabHelper(UnityPlayer.currentActivity, base64EncodedPublicKey, _useMainNet);
 
         Application.iabHelper = mHelper;
 
@@ -355,5 +361,9 @@ public class UnityAppcoins  {
         _isPayloadValid = status;
 
         mValidationFinishedListener.onValidationFinished(status,_toBeValidatedPurchase);
+    }
+
+    public boolean UseMainNet() {
+        return _useMainNet;
     }
 }

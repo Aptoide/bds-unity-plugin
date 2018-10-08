@@ -9,6 +9,7 @@ import android.content.IntentSender.SendIntentException;
 import android.content.ServiceConnection;
 import android.content.pm.ResolveInfo;
 import android.os.Bundle;
+import android.os.Debug;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.RemoteException;
@@ -102,6 +103,9 @@ public class IabHelper {
   // Public key for verifying signature, in base64 encoding
   String mSignatureBase64 = null;
 
+  // If we're using the main net or not
+  boolean mUseMainNet;
+
   // Billing response codes
   public static final int BILLING_RESPONSE_RESULT_OK = 0;
   public static final int BILLING_RESPONSE_RESULT_USER_CANCELED = 1;
@@ -162,7 +166,15 @@ public class IabHelper {
   public IabHelper(Context ctx, String base64PublicKey) {
     mContext = ctx.getApplicationContext();
     mSignatureBase64 = base64PublicKey;
-    logDebug("IAB helper created.");
+    mUseMainNet = true;
+    logDebug("IAB helper created. useMainNet: " + mUseMainNet);
+  }
+
+  public IabHelper(Context ctx, String base64PublicKey, boolean useMainNet) {
+    mContext = ctx.getApplicationContext();
+    mSignatureBase64 = base64PublicKey;
+    mUseMainNet = useMainNet;
+    logDebug("IAB helper created. useMainNet: " + mUseMainNet);
   }
 
   /**
@@ -279,9 +291,19 @@ public class IabHelper {
       }
     };
 
+    String iabBindAction = BuildConfig.IAB_BIND_ACTION;
+    String iabBindPackage = BuildConfig.IAB_BIND_PACKAGE;
 
-    Intent serviceIntent = new Intent(BuildConfig.IAB_BIND_ACTION);
-    serviceIntent.setPackage(BuildConfig.IAB_BIND_PACKAGE);
+    if (!mUseMainNet) {
+        //TODO fetch this from gradle.properties
+      iabBindAction = "com.appcoins.wallet.dev.iab.action.BIND";
+      iabBindPackage = "com.appcoins.wallet.dev";
+
+      logDebug("using dev versions of vars" + iabBindAction + " " + iabBindPackage);
+    }
+
+    Intent serviceIntent = new Intent(iabBindAction);
+    serviceIntent.setPackage(iabBindPackage);
 
     List<ResolveInfo> intentServices = mContext.getPackageManager()
         .queryIntentServices(serviceIntent, 0);
@@ -296,10 +318,6 @@ public class IabHelper {
             "Billing service unavailable on device."));
       }
     }
-  }
-
-  public void test() {
-      logDebug("COISO!!!!");
   }
 
   /**
