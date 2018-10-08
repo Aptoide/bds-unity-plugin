@@ -295,9 +295,8 @@ public class IabHelper {
     String iabBindPackage = BuildConfig.IAB_BIND_PACKAGE;
 
     if (!mUseMainNet) {
-        //TODO fetch this from gradle.properties
-      iabBindAction = "com.appcoins.wallet.dev.iab.action.BIND";
-      iabBindPackage = "com.appcoins.wallet.dev";
+      iabBindAction = BuildConfig.IAB_DEV_BIND_ACTION;
+      iabBindPackage = BuildConfig.IAB_DEV_BIND_PACKAGE;
 
       logDebug("using dev versions of vars" + iabBindAction + " " + iabBindPackage);
     }
@@ -314,7 +313,7 @@ public class IabHelper {
     } else {
       // no service available to handle that Intent
       if (listener != null) {
-        listener.onIabSetupFinished(new IabResult(BILLING_RESPONSE_RESULT_BILLING_UNAVAILABLE,
+        listener.onIabSetupFinished(new IabResult(BILLING_RESPONSE_RESULT_SERVICE_UNAVAILABLE,BILLING_RESPONSE_RESULT_BILLING_UNAVAILABLE,
             "Billing service unavailable on device."));
       }
     }
