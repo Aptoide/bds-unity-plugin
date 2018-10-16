@@ -70,9 +70,15 @@ If your app has IAP you have to add the BDS billing permission to the manifest. 
 
 This app submission is mandatory and essential to enable the next step: Certification. Your app needs to be certified for the integration to work. You can't even test it before the certification process is done, as the service will act like if your app does not exist.
 
-To certify the app you have two options. Either you download
-a blank APK and sign it or you write a claim about the ownership of your app on Google Play. After this process is done you're finally ready to test the game. But while the certification is pending you can star to look at next section.
+To certify the app you have two options.
 
+- If you’re distributing this app on Google Play, with the same package name, we can send you a link to the contact e-mail associated to that app. Simply open the link on that e-mail and your app will be certified.
+With this method your app is ready to be distributed on Aptoide with no action from the BDS team.
+
+- If this package isn’t on Google Play, you can download a blank APK, sign it (with the same key you signed the app you uploaded) and upload it to BDS
+This method will require the BDS team to review your request to assure the app is indeed yours and is not infringing any Intelectual Property. This process should last no longer than 5 working days
+
+After this process is done you're finally ready to test the game. But while the certification is pending you can start to look at next section.
 ## Integrating the plugin into your game
 
 1. Make sure you carefully went through all the pre-requisites.
@@ -159,11 +165,58 @@ a blank APK and sign it or you write a claim about the ownership of your app on 
 
 **NOTE:** If you want to easily debug the interactions with the BDS Purchasing system, you can attach a Unity.Text label to the Purchaser Status text outlet.
 
-# Good practices you should follow
+**NOTE:** If you want to get an IAP value in AAPC you can easily do that by calling GetAAPCPriceStringForSKU(string skuID) from AppcoinsPurchasing object.
 
-Disable purchase buttons if purchasing is not initialized yet.
+```
+string priceStr = appcoinsPurchasing.GetAAPCPriceStringForSKU(someSkuID);
 
-Disable purchase buttons for already owned non-consumable buttons.
+```
+
+## Custom Payload Validation
+
+The SDK allows you to have your own payload validation mechanism for extra safety. You can check a working sample of this mechanism on the provided sample. The Logic class acts as our custom validator and simply returns true.
+
+**NOTE:** If you're reusing the Logic class from the sample and don't want custom payload validation you just have to:
+
+- remove the _IPayloadValidator_ from the class definition
+- remove the call to _SetupCustomValidator_ on _SetupPurchaser_ function
+- remove the _IsValidPayload_ method from the Logic class.
+- you can skip the rest of this section
+
+If you want to implement custom validation for your purchases' payload you have to follow these steps:
+
+1. Make sure your validator class implements our inteface  _IPayloadValidator_. (You can reuse the class you created to handle the purchase logic)
+
+```
+public class Logic : MonoBehaviour, IPayloadValidator {
+
+}
+```
+
+2. Implement the mandatory method that handles the validation.
+
+```
+public bool IsValidPayload(string payload) {
+  Debug.Log("Custom payload validation in place! Payload is " + payload);
+  //Add your custom code here
+
+  return true; //validates the purchase by default
+}
+```
+
+3. In your purchase logic class, make sure you setup your validation class as a custom validator (in this example they're the same so we pass this as a reference). You can do this in the end of the SetupPurchaser method:
+
+```
+        void SetupPurchaser() {
+          ...
+          previous code
+          ...
+
+          //Setup custom validator with a reference to your class
+          _appcoins.SetupCustomValidator(this);
+        }
+
+```
 
 ## Versioning
 The priority of BDS and partners is to provide a good user experience to the user of Android apps and games.
@@ -174,6 +227,12 @@ BDS strongly recommends to use:
 - Vercode: higher than Google Play, by adding an extra digit - different than 0- in the left (e.g.: vercode Play=“573”, vercode BDS=“1573”)
 
 To know more about this please check the [BDS FAQ](https://blockchainds.com/faq)
+
+# Good practices you should follow
+
+Disable purchase buttons if purchasing is not initialized yet.
+
+Disable purchase buttons for already owned non-consumable buttons.
 
 ## To build the project
 

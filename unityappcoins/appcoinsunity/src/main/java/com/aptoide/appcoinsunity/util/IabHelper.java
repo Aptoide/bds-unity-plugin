@@ -20,6 +20,7 @@ import com.aptoide.appcoinsunity.BuildConfig;
 import com.aptoide.iabexample.util.BillingServiceFactory;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -313,7 +314,7 @@ public class IabHelper {
     } else {
       // no service available to handle that Intent
       if (listener != null) {
-        listener.onIabSetupFinished(new IabResult(BILLING_RESPONSE_RESULT_SERVICE_UNAVAILABLE,BILLING_RESPONSE_RESULT_BILLING_UNAVAILABLE,
+        listener.onIabSetupFinished(new IabResult(BILLING_RESPONSE_RESULT_SERVICE_UNAVAILABLE,
             "Billing service unavailable on device."));
       }
     }
@@ -1051,6 +1052,42 @@ public class IabHelper {
     } while (!TextUtils.isEmpty(continueToken));
 
     return verificationFailed ? IABHELPER_VERIFICATION_FAILED : BILLING_RESPONSE_RESULT_OK;
+  }
+
+  public String getAAPCPriceStringForSKU(String skuId) throws RemoteException, JSONException {
+      logDebug("Trying to get price string for skuid: " + skuId);
+      ArrayList<String> skuList = new ArrayList<String>();
+      skuList.add(skuId);
+
+      Bundle querySkus = new Bundle();
+      querySkus.putStringArrayList(GET_SKU_DETAILS_ITEM_LIST, skuList);
+
+      if (mService == null)
+        return "ERROR";
+
+      Bundle skuDetails = mService.getSkuDetails(3, mContext.getPackageName(), ITEM_TYPE_INAPP, querySkus);
+
+      if (!skuDetails.containsKey(RESPONSE_GET_SKU_DETAILS_LIST)) {
+          int response = getResponseCodeFromBundle(skuDetails);
+          if (response != BILLING_RESPONSE_RESULT_OK) {
+              logDebug("getSkuDetails() failed: " + getResponseDesc(response));
+              return "ERROR";
+          } else {
+              logError("getSkuDetails() returned a bundle with neither an error nor a detail list.");
+              return "ERROR";
+          }
+      }
+
+      ArrayList<String> responseList = skuDetails.getStringArrayList(RESPONSE_GET_SKU_DETAILS_LIST);
+
+      for (String thisResponse : responseList) {
+          JSONObject json = new JSONObject(thisResponse);
+          if (json != null && json.has("price_amount_micros")) {
+              return json.getString("price_amount_micros");
+          }
+      }
+
+      return "ERROR";
   }
 
   int querySkuDetails(String itemType, Inventory inv, List<String> moreSkus)

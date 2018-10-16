@@ -2,6 +2,7 @@ package com.aptoide.appcoinsunity;
 
 import android.content.Intent;
 import android.os.Debug;
+import android.os.RemoteException;
 import android.util.Log;
 
 import com.aptoide.appcoinsunity.util.IabHelper;
@@ -12,6 +13,8 @@ import com.aptoide.appcoinsunity.util.Purchase;
 import com.aptoide.appcoinsunity.util.WalletUtils;
 import com.unity3d.player.UnityPlayer;
 import com.unity3d.player.UnityPlayerActivity;
+
+import org.json.JSONException;
 
 import java.util.List;
 
@@ -290,6 +293,10 @@ public class UnityAppcoins  {
             complain(errorMsg);
             UnityPlayer.UnitySendMessage(appcoinsPrefabName,"OnPurchaseFailure",errorMsg);
         }
+    }
+
+    public String getAAPCPriceStringForSKU(String skuID) throws RemoteException, JSONException {
+        return mHelper.getAAPCPriceStringForSKU(skuID);
     }
 
     public boolean OwnsProduct(String skuID) {
