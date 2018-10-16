@@ -15,7 +15,6 @@ To successfully run the project you need to do couple of things.
 
 2. Open _AppCoins Wallet_ and create or restore a wallet
 
-3. Go to _Settings_ menu and on the _Wallets_ tab you can check your Wallet Address. Take note of it as you will need it later.
 ### Register on BDS
 1. Go to the [BDS](https://blockchainds.com/) website and press the _Sign Up_ button. Press the _Developer_ button.
 
@@ -29,11 +28,13 @@ To successfully run the project you need to do couple of things.
 
 6. You'll be redirected to the _BDS portal_ and have your account confirmed. You can now login by pressing the _Login_ button, filling in your details and pressing the _Login_ button again.
 
-7. Congratulations! You're now inside the BDS portal, ready to upload your first app. To do so click the _Add App_ button.
+7. Congratulations! You're now inside the BDS portal, ready to upload your first app. Before that let's get your _BDS Wallet Address_. On the left pane click _Wallet_ then click _Deposit AAPC_. This will load give you your _BDS Wallet Address_ store it as you will need it later.
 
-8. Fill in the _app package name_ (should be the same as the one used for Google Play). Press the _Next_ button.
+8. Now on the same left pane click _Manage Apps_ and the _Add App_.
 
-9. Now you're asked if you want to start monetizing your app. Whatever the answer, make sure that you store the _Public Key_ that's given to you next to the _Wallet Address_. You'll need both these values as inputs when integrating the plugin on Unity.
+9. Fill in the _app package name_ (should be the same as the one used for Google Play). Press the _Next_ button.
+
+10. Now you're asked if you want to start monetizing your app. Whatever the answer, make sure that you store the _Public Key_ that's given to you next to the _Wallet Address_. You'll need both these values as inputs when integrating the plugin on Unity.
 
 ### First App upload
 Time to upload an APK of your app. For the upload to get through there are some mandatory steps that you need to follow.
