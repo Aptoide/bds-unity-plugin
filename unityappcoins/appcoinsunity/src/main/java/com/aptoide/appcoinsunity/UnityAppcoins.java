@@ -2,6 +2,7 @@ package com.aptoide.appcoinsunity;
 
 import android.content.Intent;
 import android.os.Debug;
+import android.os.RemoteException;
 import android.util.Log;
 
 import com.aptoide.appcoinsunity.util.IabHelper;
@@ -12,6 +13,8 @@ import com.aptoide.appcoinsunity.util.Purchase;
 import com.aptoide.appcoinsunity.util.WalletUtils;
 import com.unity3d.player.UnityPlayer;
 import com.unity3d.player.UnityPlayerActivity;
+
+import org.json.JSONException;
 
 import java.util.List;
 
@@ -51,40 +54,53 @@ public class UnityAppcoins  {
                      * verifyDeveloperPayload().
                      */
 
-                    List<String> ownedSkus =  inventory.getAllOwnedSkus();
-                    Log.d(TAG, "Checking " + ownedSkus.size() + " owned items.");
+                    _ownedSkus =  inventory.getAllOwnedSkus();
+                    Log.d(TAG, "Checking " + _ownedSkus.size() + " owned items.");
 
-                    for (String sku : ownedSkus) {
-                        Log.d(TAG, "Checking " + sku + ".");
+                    _currentInventoryValidationTests = 0;
+                    _totalInventoryValidationTests = _ownedSkus.size();
 
-                        Purchase purchase = inventory.getPurchase(sku);
-                        if (verifyDeveloperPayload(purchase)) {
-                            Log.d(TAG, "Notifying existence of sku " + sku + " to process");
+                    if (_currentInventoryValidationTests == _totalInventoryValidationTests) {
+                        Log.d(TAG, "Initial inventory query finished.");
+                        UnityPlayer.UnitySendMessage(appcoinsPrefabName,"OnInitializeSuccess","");
+                    } else {
+                        Purchase purchase = inventory.getPurchase(_ownedSkus.get(_currentInventoryValidationTests));
+                        verifyDeveloperPayload(purchase,mValidationFinishedListener);
+                    }
+                }
+            };
 
-                            Application.application.setLatestPurchase(purchase);
+    // Called when inventory item validation is complete
+    IabHelper.OnPayloadValidationFinishedListener mValidationFinishedListener =
+            new IabHelper.OnPayloadValidationFinishedListener() {
+                public void onValidationFinished(boolean success, Purchase purchase) {
+                    _currentInventoryValidationTests++;
+                    Log.d(TAG, "Validation finished with result: " + (success ? "PASSED" : "FAILED") );
 
-                            UnityPlayer.UnitySendMessage(appcoinsPrefabName,"OnProcessPurchase",sku);
+                    if (!success) {
+                        String errorMsg = "Existing sku that did NOT pass payload validation: " + purchase.getSku();
+                        Log.d(TAG, errorMsg);
+                        UnityPlayer.UnitySendMessage(appcoinsPrefabName,"OnInitializeFailed",errorMsg);
+                    } else {
+                        Log.d(TAG, "Notifying existence of sku " + purchase.getSku() + " to process");
+
+                        Application.application.setLatestPurchase(purchase);
+                        UnityPlayer.UnitySendMessage(appcoinsPrefabName,"OnProcessPurchase",purchase.getSku());
+
+                        //If all products were validated successfully notify initialization success
+                        //else continue validation process
+                        if (_currentInventoryValidationTests == _totalInventoryValidationTests) {
+                            Log.d(TAG, "Initial inventory query finished.");
+                            UnityPlayer.UnitySendMessage(appcoinsPrefabName,"OnInitializeSuccess","");
                         } else {
-                            Log.d(TAG, "Existing sku that did NOT pass payload validation: " + sku);
+                            Purchase newPurchase = mInventory.getPurchase(_ownedSkus.get(_currentInventoryValidationTests));
+                            verifyDeveloperPayload(newPurchase ,mValidationFinishedListener);
                         }
                     }
 
-                    // Check for gas delivery -- if we own gas, we should fill up the tank immediately
-//                    Purchase gasPurchase = inventory.getPurchase(Skus.SKU_GAS_ID);
-//                    if (gasPurchase != null && verifyDeveloperPayload(gasPurchase)) {
-//                        Log.d(TAG, "We have gas. Consuming it.");
-//                        try {
-//                            mHelper.consumeAsync(inventory.getPurchase(Skus.SKU_GAS_ID),
-//                                    mConsumeFinishedListener);
-//                        } catch (IabHelper.IabAsyncInProgressException e) {
-//                            complain("Error consuming gas. Another async operation in progress.");
-//                        }
-//                        return;
-//                    }
-
-                    Log.d(TAG, "Initial inventory query finished.");
                 }
             };
+
 
     // Called when setup is complete
     IabHelper.OnIabSetupFinishedListener mSetupFinishedListener =
@@ -127,7 +143,7 @@ public class UnityAppcoins  {
                         complain(error);
                         UnityPlayer.UnitySendMessage(appcoinsPrefabName,"OnInitializeFail",error);
                     } finally {
-                        UnityPlayer.UnitySendMessage(appcoinsPrefabName,"OnInitializeSuccess","");
+
                     }
                 }
 
@@ -161,12 +177,20 @@ public class UnityAppcoins  {
     // (arbitrary) request code for the purchase flow
     private static int REQUEST_CODE = 1337;
     private static  String developerBDSPublicKey = "CONSTRUCT_YOUR_BDS_KEY_AND_PLACE_IT_HERE";
+    private static  boolean _useMainNet = true;
     private static  boolean shouldLog = false;
     public static UnityAppcoins instance;
 
     private IabHelper mHelper;
     private Inventory mInventory;
     private boolean _isPayloadValid = true;
+    private Purchase _toBeValidatedPurchase;
+    //The number of validation tests to be done before ending inventory query
+    private int _totalInventoryValidationTests;
+    //The current number of validation tests already done for inventory quert
+    private int _currentInventoryValidationTests;
+    private List<String> _ownedSkus;
+
 
     public static void start()
     {
@@ -186,19 +210,20 @@ public class UnityAppcoins  {
         shouldLog = val;
     }
 
+    public static void setUseMainNet(boolean val) {
+        Log.d("UnityAppCoins","Setting use main net: " + val);
+        _useMainNet = val;
+    }
+
     public static boolean hasWalletInstalled() {
-        return WalletUtils.hasWalletInstalled(UnityPlayer.currentActivity);
+        boolean hasWallet = WalletUtils.hasWalletInstalled(UnityPlayer.currentActivity);
+        return hasWallet;
     }
 
     public static void promptWalletInstall() {
         Log.d("UnityAppCoins","Prompting to install wallet");
-        WalletUtils.promptToInstallWallet(UnityPlayer.currentActivity,
-                UnityPlayer.currentActivity.getString(R.string.install_wallet_from_ads))
-                .toCompletable()
-                .doOnSubscribe(disposable1 -> {})
-                .doOnComplete(() -> {})
-                .subscribe(() -> {
-                }, Throwable::printStackTrace);
+        WalletUtils.showWalletInstallDialog(UnityPlayer.currentActivity,
+                UnityPlayer.currentActivity.getString(R.string.install_wallet_from_ads));
     }
 
     public void CreateIABHelper() {
@@ -225,7 +250,7 @@ public class UnityAppcoins  {
         }
 
         // Create the helper, passing it our context and the public key to verify signatures with
-        mHelper = new IabHelper(UnityPlayer.currentActivity, base64EncodedPublicKey);
+        mHelper = new IabHelper(UnityPlayer.currentActivity, base64EncodedPublicKey, _useMainNet);
 
         Application.iabHelper = mHelper;
 
@@ -244,6 +269,7 @@ public class UnityAppcoins  {
     }
 
     public void makePurchase(String skuID, String payload) {
+
         Log.d("UnityAppCoins", "[PrepareBuy] Calling makePurchase with skuid" + skuID + " and payload " + payload);
 
         Intent shareIntent = new Intent();
@@ -267,6 +293,10 @@ public class UnityAppcoins  {
             complain(errorMsg);
             UnityPlayer.UnitySendMessage(appcoinsPrefabName,"OnPurchaseFailure",errorMsg);
         }
+    }
+
+    public String getAPPCPriceStringForSKU(String skuID) throws RemoteException, JSONException {
+        return mHelper.getAPPCPriceStringForSKU(skuID);
     }
 
     public boolean OwnsProduct(String skuID) {
@@ -293,7 +323,10 @@ public class UnityAppcoins  {
     }
 
     /** Verifies the developer payload of a purchase. */
-    boolean verifyDeveloperPayload(Purchase p) {
+    void verifyDeveloperPayload(Purchase p, IabHelper.OnPayloadValidationFinishedListener validationListener) {
+        _toBeValidatedPurchase = p;
+        mValidationFinishedListener = validationListener;
+
         String payload = p.getDeveloperPayload();
 
         /*
@@ -319,22 +352,21 @@ public class UnityAppcoins  {
          * installations is recommended.
          */
 
-//        //Reset value
-//        _isPayloadValid = false;
-//
-//        //UnitySendMessage can't return values so we call it and on Unity's side we call a function in java to change the value
-//        Log.d(TAG, "Before send message.");
-//        UnityPlayer.UnitySendMessage(appcoinsPrefabName,"AskForPayloadValidation",payload);
-//
-//        Log.d(TAG, "After send message.");
-//
-//
-        Log.d(TAG, "returning " + _isPayloadValid);
-        return _isPayloadValid;
+        //Reset value
+        _isPayloadValid = false;
+
+        //UnitySendMessage can't return values so we call it and on Unity's side we call a function in java to change the value
+        UnityPlayer.UnitySendMessage(appcoinsPrefabName,"AskForPayloadValidation",payload);
     }
 
     public void setPayloadValidationStatus(boolean status) {
         Log.d(TAG, "setPayloadValidationStatus: " + status);
         _isPayloadValid = status;
+
+        mValidationFinishedListener.onValidationFinished(status,_toBeValidatedPurchase);
+    }
+
+    public boolean UseMainNet() {
+        return _useMainNet;
     }
 }

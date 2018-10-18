@@ -7,5 +7,5 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/AppcoinsUnity/Example/Example.unity
-    guid: 65c7bde96f40c45318d60ab58af9a9e3
+    guid: a935460b726f34318afd317be86a41ce
   m_configObjects: {}

@@ -9,6 +9,7 @@ import android.content.IntentSender.SendIntentException;
 import android.content.ServiceConnection;
 import android.content.pm.ResolveInfo;
 import android.os.Bundle;
+import android.os.Debug;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.RemoteException;
@@ -19,6 +20,7 @@ import com.aptoide.appcoinsunity.BuildConfig;
 import com.aptoide.iabexample.util.BillingServiceFactory;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -102,6 +104,9 @@ public class IabHelper {
   // Public key for verifying signature, in base64 encoding
   String mSignatureBase64 = null;
 
+  // If we're using the main net or not
+  boolean mUseMainNet;
+
   // Billing response codes
   public static final int BILLING_RESPONSE_RESULT_OK = 0;
   public static final int BILLING_RESPONSE_RESULT_USER_CANCELED = 1;
@@ -162,7 +167,15 @@ public class IabHelper {
   public IabHelper(Context ctx, String base64PublicKey) {
     mContext = ctx.getApplicationContext();
     mSignatureBase64 = base64PublicKey;
-    logDebug("IAB helper created.");
+    mUseMainNet = true;
+    logDebug("IAB helper created. useMainNet: " + mUseMainNet);
+  }
+
+  public IabHelper(Context ctx, String base64PublicKey, boolean useMainNet) {
+    mContext = ctx.getApplicationContext();
+    mSignatureBase64 = base64PublicKey;
+    mUseMainNet = useMainNet;
+    logDebug("IAB helper created. useMainNet: " + mUseMainNet);
   }
 
   /**
@@ -279,9 +292,18 @@ public class IabHelper {
       }
     };
 
+    String iabBindAction = BuildConfig.IAB_BIND_ACTION;
+    String iabBindPackage = BuildConfig.IAB_BIND_PACKAGE;
 
-    Intent serviceIntent = new Intent(BuildConfig.IAB_BIND_ACTION);
-    serviceIntent.setPackage(BuildConfig.IAB_BIND_PACKAGE);
+    if (!mUseMainNet) {
+      iabBindAction = BuildConfig.IAB_DEV_BIND_ACTION;
+      iabBindPackage = BuildConfig.IAB_DEV_BIND_PACKAGE;
+
+      logDebug("using dev versions of vars" + iabBindAction + " " + iabBindPackage);
+    }
+
+    Intent serviceIntent = new Intent(iabBindAction);
+    serviceIntent.setPackage(iabBindPackage);
 
     List<ResolveInfo> intentServices = mContext.getPackageManager()
         .queryIntentServices(serviceIntent, 0);
@@ -292,14 +314,10 @@ public class IabHelper {
     } else {
       // no service available to handle that Intent
       if (listener != null) {
-        listener.onIabSetupFinished(new IabResult(BILLING_RESPONSE_RESULT_BILLING_UNAVAILABLE,
+        listener.onIabSetupFinished(new IabResult(BILLING_RESPONSE_RESULT_SERVICE_UNAVAILABLE,
             "Billing service unavailable on device."));
       }
     }
-  }
-
-  public void test() {
-      logDebug("COISO!!!!");
   }
 
   /**
@@ -360,6 +378,21 @@ public class IabHelper {
   public boolean subscriptionsSupported() {
     checkNotDisposed();
     return mSubscriptionsSupported;
+  }
+
+  /**
+   * Callback that notifies when a purchase has finished validating.
+   */
+  public interface OnPayloadValidationFinishedListener {
+    /**
+     * Called to notify that an in-app purchase payload validation finished. If the validation was successful,
+     * then the sku parameter specifies which item was purchased. If the purchase failed,
+     * the sku and extraData parameters may or may not be null, depending on how far the purchase
+     * process went.
+     *
+     * @param success The result of the validation.
+     */
+    void onValidationFinished(boolean success, Purchase purchase);
   }
 
   /**
@@ -1019,6 +1052,42 @@ public class IabHelper {
     } while (!TextUtils.isEmpty(continueToken));
 
     return verificationFailed ? IABHELPER_VERIFICATION_FAILED : BILLING_RESPONSE_RESULT_OK;
+  }
+
+  public String getAPPCPriceStringForSKU(String skuId) throws RemoteException, JSONException {
+      logDebug("Trying to get price string for skuid: " + skuId);
+      ArrayList<String> skuList = new ArrayList<String>();
+      skuList.add(skuId);
+
+      Bundle querySkus = new Bundle();
+      querySkus.putStringArrayList(GET_SKU_DETAILS_ITEM_LIST, skuList);
+
+      if (mService == null)
+        return "ERROR";
+
+      Bundle skuDetails = mService.getSkuDetails(3, mContext.getPackageName(), ITEM_TYPE_INAPP, querySkus);
+
+      if (!skuDetails.containsKey(RESPONSE_GET_SKU_DETAILS_LIST)) {
+          int response = getResponseCodeFromBundle(skuDetails);
+          if (response != BILLING_RESPONSE_RESULT_OK) {
+              logDebug("getSkuDetails() failed: " + getResponseDesc(response));
+              return "ERROR";
+          } else {
+              logError("getSkuDetails() returned a bundle with neither an error nor a detail list.");
+              return "ERROR";
+          }
+      }
+
+      ArrayList<String> responseList = skuDetails.getStringArrayList(RESPONSE_GET_SKU_DETAILS_LIST);
+
+      for (String thisResponse : responseList) {
+          JSONObject json = new JSONObject(thisResponse);
+          if (json != null && json.has("price_amount_micros")) {
+              return json.getString("price_amount_micros");
+          }
+      }
+
+      return "ERROR";
   }
 
   int querySkuDetails(String itemType, Inventory inv, List<String> moreSkus)

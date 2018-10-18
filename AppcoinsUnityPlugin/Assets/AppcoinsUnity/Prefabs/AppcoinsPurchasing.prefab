@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4204436969633990}
   - component: {fileID: 114023370572500150}
   - component: {fileID: 114691361896027012}
+  - component: {fileID: 114656107395751172}
   m_Layer: 0
   m_Name: AppcoinsPurchasing
   m_TagString: Untagged
@@ -63,6 +64,17 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   _statusText: {fileID: 0}
+--- !u!114 &114656107395751172
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1268422919719280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1920519954, guid: 3bc53a99d326f44ea832b81177ec4dbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114691361896027012
 MonoBehaviour:
   m_ObjectHideFlags: 1

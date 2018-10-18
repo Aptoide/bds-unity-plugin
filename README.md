@@ -9,16 +9,82 @@ This plugin is developed to support the  [AppCoins](https://appcoins.io/) protoc
  Integrating this plugin allows developers to integrate the AppCoins In-App Billing into their game.
 
 ## Pre requisites to run the project
-To successfully run the project you need to:
-1. Download and install AppCoins Wallet app (you can get it on [Aptoide](https://appcoins-wallet.en.aptoide.com/?store-name=asf-store) or [GooglePlay](https://play.google.com/store/apps/details?id=com.appcoins.wallet))
+To successfully run the project you need to do couple of things.
+### Setup a Wallet
+1. Download and install _AppCoins Wallet_ app (you can get it on [Aptoide](https://appcoins-wallet.en.aptoide.com/?store-name=asf-store) or [GooglePlay](https://play.google.com/store/apps/details?id=com.appcoins.wallet))
 
-2. Open AppCoins Wallet and create or restore a wallet
+2. Open _AppCoins Wallet_ and create or restore a wallet
 
+### Register on BDS
+1. Go to the [BDS](https://blockchainds.com/) website and press the _Sign Up_ button. Press the _Developer_ button.
+
+2. Fill in all the required details.
+
+3. After this you'll have to read through and accept the _Terms of service_.
+
+4. After this you'll have to read through and accept the _Certified Developer Distribution Agreement_.
+
+5. Wait a few moments and you should've received a confirmation e-mail on the e-mail account you supplied. Open it and click the _Confirm Email_ link.
+
+6. You'll be redirected to the _BDS portal_ and have your account confirmed. You can now login by pressing the _Login_ button, filling in your details and pressing the _Login_ button again.
+
+7. Congratulations! You're now inside the BDS portal, ready to upload your first app. Before that let's get your _BDS Wallet Address_. On the left pane click _Wallet_ then click _Deposit APPC_. This will load give you your _BDS Wallet Address_ store it as you will need it later.
+
+8. Now on the same left pane click _Manage Apps_ and the _Add App_.
+
+9. Fill in the _app package name_ (should be the same as the one used for Google Play). Press the _Next_ button.
+
+10. Now you're asked if you want to start monetizing your app. Whatever the answer, make sure that you store the _Public Key_ that's given to you next to the _Wallet Address_. You'll need both these values as inputs when integrating the plugin on Unity.
+
+### First App upload
+Time to upload an APK of your app. For the upload to get through there are some mandatory steps that you need to follow.
+
+- **Mandatory**:
+It's mandatory that the APK does NOT feature the Google billing permission. To do this you need to edit the AndroidManifest.xml and remove the line:
+
+```
+<uses-permission android:name="com.android.vending.BILLING" />
+```
+- **Mandatory**:
+The uploaded APK has to be signed (ideally with the same key used for Google Play). If you don't know how to do this check the section below **To make a signed build**
+
+- **Mandatory**:
+If your app has IAP you have to add the BDS billing permission to the manifest. Failing to do so will block the creation of IAP Products on the BDS Portal. To add the permission you need to edit the AndroidManifest.xml and add the line _uses-permission_ like so:
+
+```
+=Example AndroidManifest.xml=
+<?xml version="1.0" encoding="utf-8"?>
+<manifest
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  package="com.your.app"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:installLocation="preferExternal">
+
+  ...
+
+  <uses-permission android:name="com.appcoins.BILLING" />
+
+  ...
+
+</manifest>
+```
+
+This app submission is mandatory and essential to enable the next step: Certification. Your app needs to be certified for the integration to work. You can't even test it before the certification process is done, as the service will act like if your app does not exist.
+
+To certify the app you have two options.
+
+- If you’re distributing this app on Google Play, with the same package name, we can send you a link to the contact e-mail associated to that app. Simply open the link on that e-mail and your app will be certified.
+With this method your app is ready to be distributed on Aptoide with no action from the BDS team.
+
+- If this package isn’t on Google Play, you can download a blank APK, sign it (with the same key you signed the app you uploaded) and upload it to BDS
+This method will require the BDS team to review your request to assure the app is indeed yours and is not infringing any Intelectual Property. This process should last no longer than 5 working days
+
+After this process is done you're finally ready to test the game. But while the certification is pending you can start to look at next section.
 ## Integrating the plugin into your game
 
-1. Register on [BDS](https://blockchainds.com/)
+1. Make sure you carefully went through all the pre-requisites.
 
-2. Download the plugin package corresponding to your Unity version. You can find them on the latest release [here](https://github.com/Aptoide/bds-unity-plugin/releases).  Open the package in your Unity project (double click the file or in Unity go to Assets -> Import Package -> Custom Package.... and find the file you just downloaded). Make sure to import the example folder.
+2. Download the plugin package corresponding to your Unity version (The supported Unity versions are 2018, 2017 and 5.6). You can find them on the latest release [here](https://github.com/Aptoide/bds-unity-plugin/releases).  Open the package in your Unity project (double click the file or in Unity go to Assets -> Import Package -> Custom Package.... and find the file you just downloaded). Make sure to import the example folder.
 
 3. Open the example scene.
 
@@ -39,25 +105,23 @@ To successfully run the project you need to:
 
 ![message](Screenshots/message.png)
 
-8. Insert these snippets into your logic class
-
-9. Add these imports
+8. Add these imports into your logic class
 ```
         using Appcoins.Purchasing;
         using UnityEngine.Purchasing;
 ```
 
-10. Define product ids
+9. Define product ids
 ```
         public static string kYourProductID = "yourSkuID";
         public static string kOtherProductID = "otherSkuID";
 ```
-11. Define outlet for Purchaser class
+10. Define outlet for Purchaser class
 ```
         [SerializeField]
         private Purchaser _purchaser;
 ```
-12. Define OnPurchaseSuccess to process the purchase result
+11. Define OnPurchaseSuccess to process the purchase result
 ```
         private void OnPurchaseSuccess(AppcoinsProduct product)
         {
@@ -70,7 +134,7 @@ To successfully run the project you need to:
             }
         }
 ```
-13. Setup purchaser with defined product ids and correct product types
+12. Setup purchaser with defined product ids and correct product types
 ```
         void SetupPurchaser() {
             _purchaser.onInitializeSuccess.AddListener(OnInitializeSuccess);
@@ -83,7 +147,7 @@ To successfully run the project you need to:
             _purchaser.InitializePurchasing();
        }
 ```
-14. Call the function you just created when you want to initialize the Purchasing system. We want it as soon as possible so we add it to the Start method of our logic class.
+13. Call the function you just created when you want to initialize the Purchasing system. We want it as soon as possible so we add it to the Start method of our logic class.
 
 ```
         void Start () {
@@ -92,13 +156,76 @@ To successfully run the project you need to:
         }
 ```
 
-15. Create an instance of the prefab _AppcoinsPurchasing_ located on the Prefabs folder.
+14. Create an instance of the prefab _AppcoinsPurchasing_ located on the Prefabs folder.
 
-16. Fill it in with the appropriate values for _Developer Wallet Address_ and _Developer BDS Public Key_. (The default ones are working for the sample app)
+15. Fill it in with the appropriate values for _Developer Wallet Address_ and _Developer BDS Public Key_ that you previously stored during the pre-requisites steps. (The default ones are working for the sample app)
 
-17. Make sure to drag _AppcoinsPurchasing_ game object to the purchaser outlet your created in your logic object.
+16. Make sure to drag _AppcoinsPurchasing_ game object to the purchaser outlet your created in your logic object.
 
 **NOTE:** If you want to easily debug the interactions with the BDS Purchasing system, you can attach a Unity.Text label to the Purchaser Status text outlet.
+
+**NOTE:** If you want to get an IAP value in APPC you can easily do that by calling GetAPPCPriceStringForSKU(string skuID) from AppcoinsPurchasing object.
+
+```
+string priceStr = appcoinsPurchasing.GetAPPCPriceStringForSKU(someSkuID);
+
+```
+
+## Custom Payload Validation
+
+The SDK allows you to have your own payload validation mechanism for extra safety. You can check a working sample of this mechanism on the provided sample. The Logic class acts as our custom validator and simply returns true.
+
+**NOTE:** If you're reusing the Logic class from the sample and don't want custom payload validation you just have to:
+
+- remove the _IPayloadValidator_ from the class definition
+- remove the call to _SetupCustomValidator_ on _SetupPurchaser_ function
+- remove the _IsValidPayload_ method from the Logic class.
+- you can skip the rest of this section
+
+If you want to implement custom validation for your purchases' payload you have to follow these steps:
+
+1. Make sure your validator class implements our inteface  _IPayloadValidator_. (You can reuse the class you created to handle the purchase logic)
+
+```
+public class Logic : MonoBehaviour, IPayloadValidator {
+
+}
+```
+
+2. Implement the mandatory method that handles the validation.
+
+```
+public bool IsValidPayload(string payload) {
+  Debug.Log("Custom payload validation in place! Payload is " + payload);
+  //Add your custom code here
+
+  return true; //validates the purchase by default
+}
+```
+
+3. In your purchase logic class, make sure you setup your validation class as a custom validator (in this example they're the same so we pass this as a reference). You can do this in the end of the SetupPurchaser method:
+
+```
+        void SetupPurchaser() {
+          ...
+          previous code
+          ...
+
+          //Setup custom validator with a reference to your class
+          _appcoins.SetupCustomValidator(this);
+        }
+
+```
+
+## Versioning
+The priority of BDS and partners is to provide a good user experience to the user of Android apps and games.
+
+BDS strongly recommends to use:
+- Package ID: the same as in Google Play (e.g. “com.example.myapp”)
+- Developer's signature: the same as in Google Play
+- Vercode: higher than Google Play, by adding an extra digit - different than 0- in the left (e.g.: vercode Play=“573”, vercode BDS=“1573”)
+
+To know more about this please check the [BDS FAQ](https://blockchainds.com/faq)
 
 # Good practices you should follow
 

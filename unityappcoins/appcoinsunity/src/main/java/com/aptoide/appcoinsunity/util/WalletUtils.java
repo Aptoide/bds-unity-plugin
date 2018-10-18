@@ -3,6 +3,7 @@ package com.aptoide.appcoinsunity.util;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -30,32 +31,20 @@ public class WalletUtils {
         Uri uri = Uri.parse("ethereum:");
         intent.setData(uri);
 
-        boolean val = hasHandlerAvailable(intent, context);
-
-        Log.d(UnityAppcoins.TAG,"Wallet " + (val ? "IS" : "ISN'T") + " installed" );
-
-        return val;
+        return hasHandlerAvailable(intent, context);
     }
 
-    public static Single<Boolean> promptToInstallWallet(Activity activity, String message) {
-        return showWalletInstallDialog(activity, message).doOnSuccess(aBoolean -> {
-            if (aBoolean) {
-                gotoStore(activity);
-            }
-        });
+    public static void showWalletInstallDialog(Context context, String message) {
+        AlertDialog.Builder builder;
+        builder = new AlertDialog.Builder(context);
+        builder.setTitle(R.string.wallet_missing)
+                .setMessage(message)
+                .setPositiveButton(R.string.install, (dialog, which) -> gotoStore(context))
+                .setNegativeButton(R.string.skip, (DialogInterface dialog, int which) -> dialog.dismiss())
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
-    private static Single<Boolean> showWalletInstallDialog(Context context, String message) {
-        return Single.create(emitter -> {
-            AlertDialog.Builder builder;
-            builder = new AlertDialog.Builder(context);
-            builder.setTitle(R.string.wallet_missing)
-                    .setMessage(message)
-                    .setPositiveButton(R.string.install, (dialog, which) -> emitter.onSuccess(true))
-                    .setNegativeButton(R.string.skip, (dialog, which) -> emitter.onSuccess(false))
-                    .setIcon(android.R.drawable.ic_dialog_alert)
-                    .show();
-        });
-    }
+
     @NonNull
     private static void gotoStore(Context activity) {
         String appPackageName = "com.appcoins.wallet";
