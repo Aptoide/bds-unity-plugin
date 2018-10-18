@@ -295,8 +295,8 @@ public class UnityAppcoins  {
         }
     }
 
-    public String getAAPCPriceStringForSKU(String skuID) throws RemoteException, JSONException {
-        return mHelper.getAAPCPriceStringForSKU(skuID);
+    public String getAPPCPriceStringForSKU(String skuID) throws RemoteException, JSONException {
+        return mHelper.getAPPCPriceStringForSKU(skuID);
     }
 
     public boolean OwnsProduct(String skuID) {

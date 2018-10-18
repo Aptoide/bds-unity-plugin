@@ -1054,7 +1054,7 @@ public class IabHelper {
     return verificationFailed ? IABHELPER_VERIFICATION_FAILED : BILLING_RESPONSE_RESULT_OK;
   }
 
-  public String getAAPCPriceStringForSKU(String skuId) throws RemoteException, JSONException {
+  public String getAPPCPriceStringForSKU(String skuId) throws RemoteException, JSONException {
       logDebug("Trying to get price string for skuid: " + skuId);
       ArrayList<String> skuList = new ArrayList<String>();
       skuList.add(skuId);

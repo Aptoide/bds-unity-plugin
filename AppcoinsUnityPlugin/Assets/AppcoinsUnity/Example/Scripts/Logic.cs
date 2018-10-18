@@ -27,6 +27,9 @@ public class Logic : MonoBehaviour, IPayloadValidator {
     [SerializeField]
     private Button _btnBuyNoAds;
 
+    [SerializeField]
+    private Text _priceTxt;
+
     public const string GAS_KEY = "gas";
     public static string kProductIDConsumable = "gas";
     public static string kProductIDNonConsumable = "premium";
@@ -58,6 +61,8 @@ public class Logic : MonoBehaviour, IPayloadValidator {
 
     private void OnInitializeSuccess() {
         EnablePurchaseButtons();
+
+        _priceTxt.text = _appcoins.GetAPPCPriceStringForSKU("gas");
     }
 
     private void OnPurchaseSuccess(AppcoinsProduct product)
