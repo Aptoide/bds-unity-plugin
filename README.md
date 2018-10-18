@@ -105,25 +105,23 @@ After this process is done you're finally ready to test the game. But while the 
 
 ![message](Screenshots/message.png)
 
-8. Insert these snippets into your logic class
-
-9. Add these imports
+8. Add these imports into your logic class
 ```
         using Appcoins.Purchasing;
         using UnityEngine.Purchasing;
 ```
 
-10. Define product ids
+9. Define product ids
 ```
         public static string kYourProductID = "yourSkuID";
         public static string kOtherProductID = "otherSkuID";
 ```
-11. Define outlet for Purchaser class
+10. Define outlet for Purchaser class
 ```
         [SerializeField]
         private Purchaser _purchaser;
 ```
-12. Define OnPurchaseSuccess to process the purchase result
+11. Define OnPurchaseSuccess to process the purchase result
 ```
         private void OnPurchaseSuccess(AppcoinsProduct product)
         {
@@ -136,7 +134,7 @@ After this process is done you're finally ready to test the game. But while the 
             }
         }
 ```
-13. Setup purchaser with defined product ids and correct product types
+12. Setup purchaser with defined product ids and correct product types
 ```
         void SetupPurchaser() {
             _purchaser.onInitializeSuccess.AddListener(OnInitializeSuccess);
@@ -149,7 +147,7 @@ After this process is done you're finally ready to test the game. But while the 
             _purchaser.InitializePurchasing();
        }
 ```
-14. Call the function you just created when you want to initialize the Purchasing system. We want it as soon as possible so we add it to the Start method of our logic class.
+13. Call the function you just created when you want to initialize the Purchasing system. We want it as soon as possible so we add it to the Start method of our logic class.
 
 ```
         void Start () {
@@ -158,15 +156,15 @@ After this process is done you're finally ready to test the game. But while the 
         }
 ```
 
-15. Create an instance of the prefab _AppcoinsPurchasing_ located on the Prefabs folder.
+14. Create an instance of the prefab _AppcoinsPurchasing_ located on the Prefabs folder.
 
-16. Fill it in with the appropriate values for _Developer Wallet Address_ and _Developer BDS Public Key_ that you previously stored during the pre-requisites steps. (The default ones are working for the sample app)
+15. Fill it in with the appropriate values for _Developer Wallet Address_ and _Developer BDS Public Key_ that you previously stored during the pre-requisites steps. (The default ones are working for the sample app)
 
-17. Make sure to drag _AppcoinsPurchasing_ game object to the purchaser outlet your created in your logic object.
+16. Make sure to drag _AppcoinsPurchasing_ game object to the purchaser outlet your created in your logic object.
 
 **NOTE:** If you want to easily debug the interactions with the BDS Purchasing system, you can attach a Unity.Text label to the Purchaser Status text outlet.
 
-**NOTE:** If you want to get an IAP value in AAPC you can easily do that by calling GetAAPCPriceStringForSKU(string skuID) from AppcoinsPurchasing object.
+**NOTE:** If you want to get an IAP value in APPC you can easily do that by calling GetAAPCPriceStringForSKU(string skuID) from AppcoinsPurchasing object.
 
 ```
 string priceStr = appcoinsPurchasing.GetAAPCPriceStringForSKU(someSkuID);
