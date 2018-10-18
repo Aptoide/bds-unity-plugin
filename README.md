@@ -28,7 +28,7 @@ To successfully run the project you need to do couple of things.
 
 6. You'll be redirected to the _BDS portal_ and have your account confirmed. You can now login by pressing the _Login_ button, filling in your details and pressing the _Login_ button again.
 
-7. Congratulations! You're now inside the BDS portal, ready to upload your first app. Before that let's get your _BDS Wallet Address_. On the left pane click _Wallet_ then click _Deposit AAPC_. This will load give you your _BDS Wallet Address_ store it as you will need it later.
+7. Congratulations! You're now inside the BDS portal, ready to upload your first app. Before that let's get your _BDS Wallet Address_. On the left pane click _Wallet_ then click _Deposit APPC_. This will load give you your _BDS Wallet Address_ store it as you will need it later.
 
 8. Now on the same left pane click _Manage Apps_ and the _Add App_.
 
@@ -164,10 +164,10 @@ After this process is done you're finally ready to test the game. But while the 
 
 **NOTE:** If you want to easily debug the interactions with the BDS Purchasing system, you can attach a Unity.Text label to the Purchaser Status text outlet.
 
-**NOTE:** If you want to get an IAP value in APPC you can easily do that by calling GetAAPCPriceStringForSKU(string skuID) from AppcoinsPurchasing object.
+**NOTE:** If you want to get an IAP value in APPC you can easily do that by calling GetAPPCPriceStringForSKU(string skuID) from AppcoinsPurchasing object.
 
 ```
-string priceStr = appcoinsPurchasing.GetAAPCPriceStringForSKU(someSkuID);
+string priceStr = appcoinsPurchasing.GetAPPCPriceStringForSKU(someSkuID);
 
 ```
 
