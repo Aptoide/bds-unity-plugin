@@ -1,86 +1,88 @@
-buildscript {
-	repositories {
-		jcenter()
-		google()
-		}
-
-	dependencies {
-		classpath 'com.android.tools.build:gradle:3.0.1'
-		}
-
-	}
-
 // Appcoins mainTemplate merged
+buildscript {
+  repositories {
+    jcenter()
+    google()
+  }
+
+  dependencies {
+    classpath 'com.android.tools.build:gradle:3.0.1'
+  }
+}
+
 allprojects {
-	repositories {
-		google()
-		jcenter()
-		flatDir {
-			dirs 'libs'
-			}
-
-		}
-
-	}
+  repositories {
+    google()
+    jcenter()
+    flatDir {
+      dirs 'libs'
+    }
+    maven {
+      url "https://dl.bintray.com/blockchainds/bds" 
+    }
+  }
+}
 
 apply plugin: 'com.android.application'
+
 dependencies {
-	implementation fileTree(dir: 'libs', excludes: ['com.android.support.support-annotations*.jar'], include: ['*.jar'])
-	compile group: 'io.reactivex.rxjava2', name: 'rxjava', version: '2.2.1'
-	**DEPS**
-	}
+  implementation fileTree(dir: 'libs', excludes: ['com.android.support.support-annotations*.jar'], include: ['*.jar'])
+  compile group: 'io.reactivex.rxjava2', name: 'rxjava', version: '2.2.1'
+  //api 'com.asfoundation:appcoins-ads:0.4.5.18b'
+  api 'com.blockchainds:appcoins-ads:0.4.6.20b'
+  **DEPS**
+}
 
 android {
-	compileSdkVersion **APIVERSION**
-	buildToolsVersion '**BUILDTOOLS**'
-	defaultConfig {
-		minSdkVersion **MINSDKVERSION**
-		targetSdkVersion **TARGETSDKVERSION**
-		applicationId '**APPLICATIONID**'
-		ndk {
-			abiFilters **ABIFILTERS**
-			}
+  compileSdkVersion **APIVERSION**
+  buildToolsVersion '**BUILDTOOLS**'
 
-		versionCode **VERSIONCODE**
-		versionName '**VERSIONNAME**'
-		multiDexEnabled true
-		compileOptions {
-			sourceCompatibility 1.8
-			targetCompatibility 1.8
-			}
+  defaultConfig {
+    minSdkVersion **MINSDKVERSION**
+    targetSdkVersion **TARGETSDKVERSION**
+    applicationId '**APPLICATIONID**'
+    ndk {
+      abiFilters **ABIFILTERS**
+    }
+    versionCode **VERSIONCODE**
+    versionName '**VERSIONNAME**'
+    multiDexEnabled true
+    compileOptions {
+    sourceCompatibility 1.8
+    targetCompatibility 1.8
+    }
+  }
 
-		}
+  lintOptions {
+    abortOnError false
+  }
 
-	lintOptions {
-		abortOnError false
-		}
+  aaptOptions {
+        noCompress '.unity3d', '.ress', '.resource', '.obb'**STREAMING_ASSETS**
+    }
 
-	aaptOptions {
-		noCompress '.unity3d', '.ress', '.resource', '.obb'**STREAMING_ASSETS**
-		}
+    **SIGN**
 
-	**SIGN**
-	buildTypes {
-		debug {
-			minifyEnabled **MINIFY_DEBUG**
-			useProguard **PROGUARD_DEBUG**
-			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-unity.txt'**USER_PROGUARD**
-			jniDebuggable true
-		resValue "string", "APPCOINS_PREFAB", "AppcoinsPurchasing"
-			}
+  buildTypes {
+    debug {
+      minifyEnabled **MINIFY_DEBUG**
+      useProguard **PROGUARD_DEBUG**
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-unity.txt'**USER_PROGUARD**
+      jniDebuggable true
+     resValue "string", "APPCOINS_PREFAB", "AppcoinsPurchasing"
+     resValue "bool", "APPCOINS_ENABLE_POA", "true"
+     resValue "bool", "APPCOINS_ENABLE_DEBUG", "false"
+    }
+    release {
+      minifyEnabled **MINIFY_DEBUG**
+      useProguard **PROGUARD_DEBUG**
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-unity.txt'**USER_PROGUARD**
+     resValue "string", "APPCOINS_PREFAB", "AppcoinsPurchasing"
+     resValue "bool", "APPCOINS_ENABLE_POA", "true"
+     resValue "bool", "APPCOINS_ENABLE_DEBUG", "false"
 
-		release {
-			minifyEnabled **MINIFY_DEBUG**
-			useProguard **PROGUARD_DEBUG**
-			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-unity.txt'**USER_PROGUARD**
-		resValue "string", "APPCOINS_PREFAB", "AppcoinsPurchasing"
-			**SIGNCONFIG**
-			}
-
-		}
-
-	**PACKAGING_OPTIONS****SPLITS**
-	**BUILT_APK_LOCATION**
-	}
-
-**SPLITS_VERSION_CODE****SOURCE_BUILD_SETUP**
+      **SIGNCONFIG**
+    }
+    }**PACKAGING_OPTIONS****SPLITS**
+**BUILT_APK_LOCATION**
+}**SPLITS_VERSION_CODE****SOURCE_BUILD_SETUP**

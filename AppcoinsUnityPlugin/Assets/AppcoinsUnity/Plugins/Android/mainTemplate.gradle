@@ -17,6 +17,9 @@ allprojects {
     flatDir {
       dirs 'libs'
     }
+    maven {
+      url "https://dl.bintray.com/blockchainds/bds" 
+    }
   }
 }
 
@@ -25,6 +28,8 @@ apply plugin: 'com.android.application'
 dependencies {
   implementation fileTree(dir: 'libs', excludes: ['com.android.support.support-annotations*.jar'], include: ['*.jar'])
   compile group: 'io.reactivex.rxjava2', name: 'rxjava', version: '2.2.1'
+  //api 'com.asfoundation:appcoins-ads:0.4.5.18b'
+  api 'com.blockchainds:appcoins-ads:0.4.6.20b'
   **DEPS**
 }
 
@@ -65,12 +70,16 @@ android {
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-unity.txt'**USER_PROGUARD**
       jniDebuggable true
       resValue "string", "APPCOINS_PREFAB", "AppcoinsPurchasing"
+      resValue "bool", "APPCOINS_ENABLE_POA", "false"
+      resValue "bool", "APPCOINS_ENABLE_DEBUG", "false"
     }
     release {
       minifyEnabled **MINIFY_DEBUG**
       useProguard **PROGUARD_DEBUG**
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-unity.txt'**USER_PROGUARD**
       resValue "string", "APPCOINS_PREFAB", "AppcoinsPurchasing"
+      resValue "bool", "APPCOINS_ENABLE_POA", "false"
+      resValue "bool", "APPCOINS_ENABLE_DEBUG", "false"
 
       **SIGNCONFIG**
     }

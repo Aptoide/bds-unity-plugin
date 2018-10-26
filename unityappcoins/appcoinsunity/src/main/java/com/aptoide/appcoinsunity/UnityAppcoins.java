@@ -1,6 +1,7 @@
 package com.aptoide.appcoinsunity;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Debug;
 import android.os.RemoteException;
 import android.util.Log;
@@ -178,6 +179,7 @@ public class UnityAppcoins  {
     private static int REQUEST_CODE = 1337;
     private static  String developerBDSPublicKey = "CONSTRUCT_YOUR_BDS_KEY_AND_PLACE_IT_HERE";
     private static  boolean _useMainNet = true;
+    private static  boolean _useAds = false;
     private static  boolean shouldLog = false;
     public static UnityAppcoins instance;
 
@@ -213,6 +215,11 @@ public class UnityAppcoins  {
     public static void setUseMainNet(boolean val) {
         Log.d("UnityAppCoins","Setting use main net: " + val);
         _useMainNet = val;
+    }
+
+    public static void setUseAdsSDK(boolean val) {
+        Log.d("UnityAppCoins","Setting use ads: " + val);
+        _useAds = val;
     }
 
     public static boolean hasWalletInstalled() {
