@@ -233,6 +233,8 @@ public class UnityAppcoins  {
                 UnityPlayer.currentActivity.getString(R.string.install_wallet_from_ads));
     }
 
+    public static String getPackageName() { return  Application.PACKAGE_NAME; }
+
     public void CreateIABHelper() {
 
         /* base64EncodedPublicKey should be YOUR APPLICATION'S PUBLIC KEY

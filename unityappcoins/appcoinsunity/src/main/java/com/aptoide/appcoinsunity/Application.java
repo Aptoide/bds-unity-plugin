@@ -21,6 +21,7 @@ public class Application extends android.app.Application {
 
     static IabHelper iabHelper;
     static Application application;
+    static String PACKAGE_NAME = "";
     static String developerAddress = "";
     private static AppCoinsAds adsSdk;
 
@@ -34,6 +35,8 @@ public class Application extends android.app.Application {
         application=this;
 
         appcoinsPrefabName = getResources().getString(R.string.APPCOINS_PREFAB);
+
+        PACKAGE_NAME = getApplicationContext().getPackageName();
 
         //Needs to happen before anything else
         //This will fetch the debug flag value that all other calls depend on
