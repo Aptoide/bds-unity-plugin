@@ -6,7 +6,7 @@ This is the official Unity plugin for the AppCoins Protocol that allows you to i
 
 ## About AppCoins Unity Plugin
 This plugin is developed to support the  [AppCoins](https://appcoins.io/) protocol.
- Integrating this plugin allows developers to integrate the AppCoins In-App Billing into their game.
+ Integrating this plugin allows developers to integrate the AppCoins In-App Billing and the AppCoins Reward campaigns into their games.
 
 ## Pre requisites to run the project
 To successfully run the project you need to do couple of things.
@@ -217,6 +217,12 @@ public bool IsValidPayload(string payload) {
 
 ```
 
+# Good practices you should follow
+
+Disable purchase buttons if purchasing is not initialized yet.
+
+Disable purchase buttons for already owned non-consumable buttons.
+
 ## Versioning
 The priority of BDS and partners is to provide a good user experience to the user of Android apps and games.
 
@@ -226,12 +232,6 @@ BDS strongly recommends to use:
 - Vercode: higher than Google Play, by adding an extra digit - different than 0- in the left (e.g.: vercode Play=“573”, vercode BDS=“1573”)
 
 To know more about this please check the [BDS FAQ](https://blockchainds.com/faq)
-
-# Good practices you should follow
-
-Disable purchase buttons if purchasing is not initialized yet.
-
-Disable purchase buttons for already owned non-consumable buttons.
 
 ## To build the project
 
@@ -251,13 +251,7 @@ On the _Player Settings_ window:
 
 4. Make sure that you have min sdk version set to 21 (if the import was done correctly this should've changed automatically).
 
-**Unity 2018.2b (and above)**
-
-1. Connect the phone to your machine and click _Build and Run_
-
-You should have your game running on the phone!
-
-**Unity 2018.1.X and below (till Unity 5.6)**
+**Unity 2018.X and below (till Unity 5.6)**
 
 1. Close the _Player Settings_ window
 
