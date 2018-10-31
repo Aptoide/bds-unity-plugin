@@ -1352,6 +1352,11 @@ Prefab:
       propertyPath: _statusText
       value: 
       objectReference: {fileID: 75120600}
+    - target: {fileID: 114691361896027012, guid: a7457b0c539e94bdf80eafb5b72db30d,
+        type: 2}
+      propertyPath: _useAdsSDK
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a7457b0c539e94bdf80eafb5b72db30d, type: 2}
   m_IsPrefabAsset: 0

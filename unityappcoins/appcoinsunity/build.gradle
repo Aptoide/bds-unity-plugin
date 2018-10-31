@@ -26,11 +26,15 @@ android {
         debug {
             minifyEnabled false
             resValue "string", "APPCOINS_PREFAB", "AppcoinsUnity"
+            resValue "bool", "APPCOINS_ENABLE_POA", "false"
+            resValue "bool", "APPCOINS_ENABLE_DEBUG", "false"
         }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             resValue "string", "APPCOINS_PREFAB", "AppcoinsUnity"
+            resValue "bool", "APPCOINS_ENABLE_POA", "false"
+            resValue "bool", "APPCOINS_ENABLE_DEBUG", "false"
         }
     }
     compileOptions {
@@ -45,6 +49,7 @@ dependencies {
     compile 'com.android.support:support-annotations:25.0.0'
     // https://mvnrepository.com/artifact/io.reactivex.rxjava2/rxjava
     compile group: 'io.reactivex.rxjava2', name: 'rxjava', version: '2.2.1'
+    api 'com.blockchainds:appcoins-ads:0.4.6.20b'
 }
 
 clean.doFirst {

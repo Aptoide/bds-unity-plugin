@@ -594,14 +594,24 @@ public class IabHelper {
         String sku = purchase.getSku();
 
         // Verify signature
-        if (!Security.verifyPurchase(mSignatureBase64, purchaseData, dataSignature)) {
-          logError("Purchase signature verification FAILED for sku " + sku);
-          result = new IabResult(IABHELPER_VERIFICATION_FAILED,
-              "Signature verification failed for sku " + sku);
-          if (mPurchaseListener != null) mPurchaseListener.onIabPurchaseFinished(result, purchase);
-          return true;
-        }
-        logDebug("Purchase signature successfully verified.");
+          try {
+              if (!Security.verifyPurchase(mSignatureBase64, purchaseData, dataSignature)) {
+                  String errorMsg = "Signature verification failed for sku " + sku + ".\n With key " + mSignatureBase64;
+                  logError(errorMsg);
+                  result = new IabResult(IABHELPER_VERIFICATION_FAILED,
+                          errorMsg);
+                  if (mPurchaseListener != null) mPurchaseListener.onIabPurchaseFinished(result, purchase);
+                  return true;
+              }
+              logDebug("Purchase signature successfully verified.");
+          } catch (IllegalArgumentException e) {
+              String errorMsg = "Purchase signature verification FAILED. Invalid key: " + mSignatureBase64;
+              logError(errorMsg);
+              result = new IabResult(IABHELPER_VERIFICATION_FAILED,
+                      errorMsg);
+              if (mPurchaseListener != null) mPurchaseListener.onIabPurchaseFinished(result, purchase);
+              return true;
+          }
       } catch (JSONException e) {
         logError("Failed to parse purchase data.");
         e.printStackTrace();
@@ -1028,22 +1038,29 @@ public class IabHelper {
         String signature = signatureList.get(i);
         String sku = ownedSkus.get(i);
         String id = idsList.get(i);
-        if (Security.verifyPurchase(mSignatureBase64, purchaseData, signature)) {
-          logDebug("Sku is owned: " + sku);
-          Purchase purchase = new Purchase(id, itemType, purchaseData, signature);
 
-          if (TextUtils.isEmpty(purchase.getToken())) {
-            logWarn("BUG: empty/null token!");
-            logDebug("Purchase data: " + purchaseData);
+        try {
+          if (Security.verifyPurchase(mSignatureBase64, purchaseData, signature)) {
+            logDebug("Sku is owned: " + sku);
+            Purchase purchase = new Purchase(id, itemType, purchaseData, signature);
+
+            if (TextUtils.isEmpty(purchase.getToken())) {
+              logWarn("BUG: empty/null token!");
+              logDebug("Purchase data: " + purchaseData);
+            }
+
+            // Record ownership and token
+            inv.addPurchase(purchase);
+          } else {
+            logWarn("Purchase signature verification **FAILED**. Not adding item.");
+            logDebug("   Purchase data: " + purchaseData);
+            logDebug("   Signature: " + signature);
+            verificationFailed = true;
           }
-
-          // Record ownership and token
-          inv.addPurchase(purchase);
-        } else {
-          logWarn("Purchase signature verification **FAILED**. Not adding item.");
-          logDebug("   Purchase data: " + purchaseData);
-          logDebug("   Signature: " + signature);
-          verificationFailed = true;
+        } catch (IllegalArgumentException e) {
+          logError("Provided invalid key: " + mSignatureBase64);
+          //return BILLING_RESPONSE_RESULT_OK; //REMOVE THIS LINE AND UNCOMMENT THE ONE BELOW
+          return  IABHELPER_VERIFICATION_FAILED;
         }
       }
 
