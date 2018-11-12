@@ -1,5 +1,9 @@
 # AppCoins Unity Plugin
 
+<aside class="notice">
+Test notice
+</aside>
+
 ![Logo](Screenshots/logos.png)
 
 This is the official Unity plugin for the AppCoins Protocol that allows you to integrate AppCoins In-App Billing into your Unity Android game.
