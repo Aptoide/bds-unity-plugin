@@ -8,6 +8,9 @@ This is the official Unity plugin for the AppCoins Protocol that allows you to i
 This plugin is developed to support the  [AppCoins](https://appcoins.io/) protocol.
  Integrating this plugin allows developers to integrate the AppCoins In-App Billing and the AppCoins Reward campaigns into their games.
 
+## Warnings
+⚠️ On previous versions of the plugin, if you had Unity 2018.X you could just build and run normally. Unfortunately this is not the case anymore! All versions of Unity need to use the Custom Build Window.⚠️
+
 ## Pre requisites to run the project
 To successfully run the project you need to do couple of things.
 ### Setup a Wallet
@@ -234,6 +237,9 @@ BDS strongly recommends to use:
 To know more about this please check the [BDS FAQ](https://blockchainds.com/faq)
 
 ## To build the project
+
+**WARNING**
+⚠️ On previous versions of the plugin, if you had Unity 2018.X you could just build and run normally. Unfortunately this is not the case anymore! All versions of Unity need to use the Custom Build Window. ⚠️
 
 Go to the build menu (File -> Build Settings)
 1. Check that the build system is set to "Gradle"
