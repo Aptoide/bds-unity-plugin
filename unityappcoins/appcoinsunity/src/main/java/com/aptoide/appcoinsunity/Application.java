@@ -69,7 +69,7 @@ public class Application extends android.app.Application {
                 UnityPlayer.UnitySendMessage(appcoinsPrefabName,"OnInitializeFail","Failed to initialize AppcoinsAds SDK " + e.toString());
                 e.printStackTrace();
             }
-            Log.d("UnityAppCoins","Successfully set up the AdsSDK");
+            Log.d("Unity","Successfully set up the AdsSDK");
 
 
 

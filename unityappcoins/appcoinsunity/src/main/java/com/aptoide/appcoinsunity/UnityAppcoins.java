@@ -213,12 +213,12 @@ public class UnityAppcoins  {
     }
 
     public static void setUseMainNet(boolean val) {
-        Log.d("UnityAppCoins","Setting use main net: " + val);
+        Log.d("Unity","Setting use main net: " + val);
         _useMainNet = val;
     }
 
     public static void setUseAdsSDK(boolean val) {
-        Log.d("UnityAppCoins","Setting use ads: " + val);
+        Log.d("Unity","Setting use ads: " + val);
         _useAds = val;
     }
 
@@ -227,8 +227,13 @@ public class UnityAppcoins  {
         return hasWallet;
     }
 
+    public static boolean hasSpecificWalletInstalled() {
+        boolean hasWallet = WalletUtils.hasSpecificWalletInstalled(UnityPlayer.currentActivity, "com.appcoins.wallet");
+        return hasWallet;
+    }
+
     public static void promptWalletInstall() {
-        Log.d("UnityAppCoins","Prompting to install wallet");
+        Log.d("Unity","Prompting to install wallet");
         WalletUtils.showWalletInstallDialog(UnityPlayer.currentActivity,
                 UnityPlayer.currentActivity.getString(R.string.install_wallet_from_ads));
     }
@@ -279,7 +284,7 @@ public class UnityAppcoins  {
 
     public void makePurchase(String skuID, String payload) {
 
-        Log.d("UnityAppCoins", "[PrepareBuy] Calling makePurchase with skuid" + skuID + " and payload " + payload);
+        Log.d("Unity", "[PrepareBuy] Calling makePurchase with skuid" + skuID + " and payload " + payload);
 
         Intent shareIntent = new Intent();
         shareIntent.putExtra(PurchaseActivity.SKUID_TAG,skuID);

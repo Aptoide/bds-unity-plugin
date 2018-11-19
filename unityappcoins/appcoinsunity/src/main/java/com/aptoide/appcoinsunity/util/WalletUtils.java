@@ -34,6 +34,19 @@ public class WalletUtils {
         return hasHandlerAvailable(intent, context);
     }
 
+    public static boolean hasSpecificWalletInstalled(Context context, String walletPackageName) {
+        boolean found = true;
+
+        try {
+            PackageManager packageManager = context.getPackageManager();
+            packageManager.getPackageInfo(walletPackageName, 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            found = false;
+        }
+
+        return found;
+    }
+
     public static void showWalletInstallDialog(Context context, String message) {
         AlertDialog.Builder builder;
         builder = new AlertDialog.Builder(context);
