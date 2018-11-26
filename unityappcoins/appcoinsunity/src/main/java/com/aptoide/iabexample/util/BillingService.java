@@ -2,7 +2,6 @@ package com.aptoide.iabexample.util;
 
 import android.os.Bundle;
 import android.os.RemoteException;
-
 import java.util.List;
 
 /**

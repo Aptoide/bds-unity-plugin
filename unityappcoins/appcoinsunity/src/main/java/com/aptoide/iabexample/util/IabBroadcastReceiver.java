@@ -3,6 +3,7 @@ package com.aptoide.iabexample.util;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import com.aptoide.iabexample.BuildConfig;
 
 /**
  * Receiver for the "com.android.vending.billing.PURCHASES_UPDATED" Action
