@@ -29,8 +29,7 @@ public class IabBroadcastReceiver extends BroadcastReceiver {
     /**
      * The Intent action that this Receiver should filter for.
      */
-    //TODO uncomment inventory query
-    public static final String ACTION = "FIX_ME";//BuildConfig.IAB_UPDATE_ACTION;
+    public static final String ACTION = BuildConfig.IAB_UPDATE_ACTION;
 
     private final IabBroadcastListener mListener;
 

@@ -9,7 +9,6 @@ import android.content.IntentSender.SendIntentException;
 import android.content.ServiceConnection;
 import android.content.pm.ResolveInfo;
 import android.os.Bundle;
-import android.os.Debug;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.RemoteException;
@@ -17,7 +16,6 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.aptoide.iabexample.BuildConfig;
-import com.aptoide.iabexample.util.BillingServiceFactory;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -59,7 +57,7 @@ import java.util.List;
  */
 public class IabHelper {
   // Is debug logging enabled?
-  boolean mDebugLog = true;
+  boolean mDebugLog = false;
   String mDebugTag = "IabHelper";
 
   // Is setup done?
@@ -213,7 +211,7 @@ public class IabHelper {
    * @param listener The listener to notify when the setup process is complete.
    */
   public void startSetup(final OnIabSetupFinishedListener listener) {
-      // If already set up, can't do it again.
+    // If already set up, can't do it again.
     checkNotDisposed();
     if (mSetupDone) throw new IllegalStateException("IAB helper is already set up.");
 
