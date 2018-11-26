@@ -1,4 +1,4 @@
-package com.aptoide.appcoinsunity.util;
+package com.aptoide.iabexample.util;
 
 import android.text.TextUtils;
 import android.util.Base64;

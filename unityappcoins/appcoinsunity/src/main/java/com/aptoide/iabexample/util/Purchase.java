@@ -1,4 +1,4 @@
-package com.aptoide.appcoinsunity.util;
+package com.aptoide.iabexample.util;
 
 import org.json.JSONException;
 import org.json.JSONObject;

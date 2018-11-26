@@ -1,4 +1,4 @@
-package com.aptoide.appcoinsunity.util;
+package com.aptoide.iabexample.util;
 
 import java.util.ArrayList;
 import java.util.HashMap;

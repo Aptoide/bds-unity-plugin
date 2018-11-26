@@ -1,4 +1,4 @@
-package com.aptoide.appcoinsunity.util;
+package com.aptoide.iabexample.util;
 
 import android.app.Activity;
 import android.app.PendingIntent;
@@ -16,7 +16,7 @@ import android.os.RemoteException;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.aptoide.appcoinsunity.BuildConfig;
+import com.aptoide.iabexample.BuildConfig;
 import com.aptoide.iabexample.util.BillingServiceFactory;
 
 import org.json.JSONException;

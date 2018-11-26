@@ -1,6 +1,5 @@
-package com.aptoide.appcoinsunity.util;
+package com.aptoide.iabexample.util;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -9,14 +8,10 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
-import com.aptoide.appcoinsunity.R;
-import com.aptoide.appcoinsunity.UnityAppcoins;
+import com.aptoide.iabexample.R;
 
 import java.util.List;
-
-import io.reactivex.Single;
 
 public class WalletUtils {
 

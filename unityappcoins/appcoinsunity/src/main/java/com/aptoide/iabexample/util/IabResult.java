@@ -1,4 +1,4 @@
-package com.aptoide.appcoinsunity.util;
+package com.aptoide.iabexample.util;
 
 /**
  * Represents the result of an in-app billing operation.

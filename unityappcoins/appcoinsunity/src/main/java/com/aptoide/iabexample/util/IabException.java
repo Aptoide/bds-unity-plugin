@@ -1,4 +1,4 @@
-package com.aptoide.appcoinsunity.util;
+package com.aptoide.iabexample.util;
 
 /**
  * Exception thrown when something went wrong with in-app billing.

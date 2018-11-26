@@ -3,10 +3,7 @@ package com.aptoide.iabexample.util;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
-
 import com.appcoins.billing.AppcoinsBilling;
-import com.aptoide.appcoinsunity.util.BillingService;
-
 import java.util.List;
 
 /**

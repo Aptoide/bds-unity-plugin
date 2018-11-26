@@ -1,4 +1,4 @@
-package com.aptoide.appcoinsunity;
+package com.aptoide.iabexample;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,10 +6,10 @@ import android.os.Bundle;
 import android.util.Log;
 
 
-import com.aptoide.appcoinsunity.util.IabHelper;
-import com.aptoide.appcoinsunity.util.IabResult;
-import com.aptoide.appcoinsunity.util.PayloadHelper;
-import com.aptoide.appcoinsunity.util.Purchase;
+import com.aptoide.iabexample.util.IabHelper;
+import com.aptoide.iabexample.util.IabResult;
+import com.aptoide.iabexample.util.PayloadHelper;
+import com.aptoide.iabexample.util.Purchase;
 import com.unity3d.player.UnityPlayer;
 
 /**

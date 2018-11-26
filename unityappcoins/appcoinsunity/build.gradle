@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 
 android {
+
     compileSdkVersion 27
     defaultConfig {
         minSdkVersion 21
@@ -20,6 +21,14 @@ android {
         buildConfigField "String", "WALLET_STORE_PASSWORD", '"replace"'
         buildConfigField "String", "WALLET_KEY_ALIAS", '"replace"'
         buildConfigField "String", "WALLET_KEY_PASSWORD", '"replace"'
+    }
+
+    flavorDimensions "iab"
+
+    productFlavors {
+        appcoinsiab {
+            dimension "iab"
+        }
     }
 
     buildTypes {
@@ -69,19 +78,22 @@ task copyAarToUnity {
 
     //unity 2018
     copy {
-        from 'build/outputs/aar/appcoinsunity-debug.aar'
+        from 'build/outputs/aar/appcoinsunity-appcoinsiab-debug.aar'
         into "../../AppcoinsUnityPlugin/Assets/Plugins/Android"
+        rename 'appcoinsunity-appcoinsiab-debug.aar', "appcoinsunity-debug.aar"
     }
 
     //unity 2017
     copy {
-        from 'build/outputs/aar/appcoinsunity-debug.aar'
+        from 'build/outputs/aar/appcoinsunity-appcoinsiab-debug.aar'
         into "../../../bds-unity-plugin-2017/AppcoinsUnityPlugin/Assets/Plugins/Android"
+        rename 'appcoinsunity-appcoinsiab-debug.aar', "appcoinsunity-debug.aar"
     }
 
     //unity 5.6
     copy {
-        from 'build/outputs/aar/appcoinsunity-debug.aar'
+        from 'build/outputs/aar/appcoinsunity-appcoinsiab-debug.aar'
         into "../../../bds-unity-plugin-5_6/AppcoinsUnityPlugin/Assets/Plugins/Android"
+        rename 'appcoinsunity-appcoinsiab-debug.aar', "appcoinsunity-debug.aar"
     }
 }

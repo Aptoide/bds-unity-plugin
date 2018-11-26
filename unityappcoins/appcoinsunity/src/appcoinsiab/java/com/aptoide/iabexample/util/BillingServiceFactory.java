@@ -2,8 +2,6 @@ package com.aptoide.iabexample.util;
 
 import android.os.IBinder;
 
-import com.aptoide.appcoinsunity.util.BillingService;
-
 /**
  * Created by marcelobenites on 02/11/16.
  */

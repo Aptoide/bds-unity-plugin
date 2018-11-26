@@ -1,4 +1,4 @@
-package com.aptoide.appcoinsunity.util;
+package com.aptoide.iabexample.util;
 
 import android.net.Uri;
 import android.support.annotation.NonNull;

@@ -1,4 +1,4 @@
-package com.aptoide.appcoinsunity;
+package com.aptoide.iabexample;
 
 /**
  * Created by neuro on 21-03-2018.

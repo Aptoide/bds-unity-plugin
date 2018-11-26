@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.aptoide.appcoinsunity">
+    package="com.aptoide.iabexample">
     <uses-permission android:name="com.android.vending.BILLING" tools:node="remove"/>
     <uses-permission android:name="com.appcoins.BILLING" />
 <application android:allowBackup="true"
@@ -8,7 +8,7 @@
     android:name=".Application"
     >
     <activity
-        android:name="com.aptoide.appcoinsunity.PurchaseActivity"
+        android:name="com.aptoide.iabexample.PurchaseActivity"
         android:label="@string/app_name"
         android:theme="@android:style/Theme.Translucent.NoTitleBar"
         />

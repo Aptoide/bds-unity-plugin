@@ -1,4 +1,4 @@
-package com.aptoide.appcoinsunity;
+package com.aptoide.iabexample;
 
 /**
  * Created by nunomonteiro on 13/08/2018.
@@ -8,8 +8,8 @@ package com.aptoide.appcoinsunity;
 import android.content.pm.PackageManager;
 import android.util.Log;
 
-import com.aptoide.appcoinsunity.util.IabHelper;
-import com.aptoide.appcoinsunity.util.Purchase;
+import com.aptoide.iabexample.util.IabHelper;
+import com.aptoide.iabexample.util.Purchase;
 import com.asf.appcoins.sdk.ads.AppCoinsAds;
 import com.asf.appcoins.sdk.ads.AppCoinsAdsBuilder;
 import com.unity3d.player.UnityPlayer;
