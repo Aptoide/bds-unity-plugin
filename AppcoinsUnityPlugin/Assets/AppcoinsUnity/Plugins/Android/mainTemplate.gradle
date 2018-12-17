@@ -71,6 +71,7 @@ android {
       jniDebuggable true
       resValue "string", "APPCOINS_PREFAB", "AppcoinsPurchasing"
       resValue "bool", "APPCOINS_ENABLE_POA", "false"
+      resValue "bool", "APPCOINS_NOVA_VAR", "false"
       resValue "bool", "APPCOINS_ENABLE_DEBUG", "false"
     }
     release {
@@ -83,6 +84,8 @@ android {
 
       **SIGNCONFIG**
     }
-    }**PACKAGING_OPTIONS****SPLITS**
+    }
+    **PACKAGING_OPTIONS**
+    **SPLITS**
 **BUILT_APK_LOCATION**
 }**SPLITS_VERSION_CODE****SOURCE_BUILD_SETUP**

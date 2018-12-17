@@ -1053,6 +1053,8 @@ public class IabHelper {
             logWarn("Purchase signature verification **FAILED**. Not adding item.");
             logDebug("   Purchase data: " + purchaseData);
             logDebug("   Signature: " + signature);
+
+            logError("Provided invalid key: " + mSignatureBase64);
             verificationFailed = true;
           }
         } catch (IllegalArgumentException e) {
