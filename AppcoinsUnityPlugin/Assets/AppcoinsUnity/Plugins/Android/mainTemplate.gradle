@@ -71,7 +71,6 @@ android {
       jniDebuggable true
       resValue "string", "APPCOINS_PREFAB", "AppcoinsPurchasing"
       resValue "bool", "APPCOINS_ENABLE_POA", "false"
-      resValue "bool", "APPCOINS_NOVA_VAR", "false"
       resValue "bool", "APPCOINS_ENABLE_DEBUG", "false"
     }
     release {
