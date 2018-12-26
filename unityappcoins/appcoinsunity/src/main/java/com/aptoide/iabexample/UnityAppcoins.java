@@ -1,22 +1,20 @@
 package com.aptoide.iabexample;
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Debug;
 import android.os.RemoteException;
 import android.util.Log;
 
 import com.aptoide.iabexample.util.IabHelper;
 import com.aptoide.iabexample.util.IabResult;
 import com.aptoide.iabexample.util.Inventory;
-import com.aptoide.iabexample.util.PayloadHelper;
 import com.aptoide.iabexample.util.Purchase;
 import com.aptoide.iabexample.util.WalletUtils;
 import com.unity3d.player.UnityPlayer;
-import com.unity3d.player.UnityPlayerActivity;
 
 import org.json.JSONException;
 
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 
 /**
@@ -108,8 +106,17 @@ public class UnityAppcoins  {
             new IabHelper.OnIabSetupFinishedListener() {
                 public void onIabSetupFinished(IabResult result) {
                     Log.d(TAG, "Setup finished.");
+
                     if (!result.isSuccess()) {
-                        // Oh noes, there was a problem.
+                        //Oh noes, there was a problem.
+
+                        //Verifys if the user is connected to a network.If not returns the error NetworkNotAvailable
+                        if(!Application.application.hasConnectionInternet())
+                        {
+                            String error = "No Network Available.";
+                            UnityPlayer.UnitySendMessage(appcoinsPrefabName,"OnInitializeFail",error);
+                            return;
+                        }
                         String error = "Problem setting up in-app billing: ";
                         complain(error + result);
 
@@ -182,7 +189,6 @@ public class UnityAppcoins  {
     private static  boolean _useAds = false;
     private static  boolean shouldLog = false;
     public static UnityAppcoins instance;
-
     private IabHelper mHelper;
     private Inventory mInventory;
     private boolean _isPayloadValid = true;
@@ -316,7 +322,7 @@ public class UnityAppcoins  {
     public boolean OwnsProduct(String skuID) {
         boolean hasPurchase = false;
         if (mInventory != null) {
-          hasPurchase = mInventory.hasPurchase(skuID);
+            hasPurchase = mInventory.hasPurchase(skuID);
         }
 
         return hasPurchase;
@@ -383,4 +389,5 @@ public class UnityAppcoins  {
     public boolean UseMainNet() {
         return _useMainNet;
     }
+
 }
