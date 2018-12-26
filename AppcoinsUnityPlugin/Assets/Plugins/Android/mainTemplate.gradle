@@ -20,7 +20,7 @@ allprojects {
 			}
 
 		maven {
-			url "https://dl.bintray.com/blockchainds/bds" 
+			url "https://dl.bintray.com/blockchainds/bds"
 			}
 
 		}
@@ -83,7 +83,7 @@ android {
 			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-unity.txt'**USER_PROGUARD**
 		resValue "string", "APPCOINS_PREFAB", "AppcoinsPurchasing"
 		resValue "bool", "APPCOINS_ENABLE_POA", "true"
-		resValue "bool", "APPCOINS_ENABLE_DEBUG", "false"
+		resValue "bool", "APPCOINS_ENABLE_DEBUG", "true"
 			**SIGNCONFIG**
 			}
 
