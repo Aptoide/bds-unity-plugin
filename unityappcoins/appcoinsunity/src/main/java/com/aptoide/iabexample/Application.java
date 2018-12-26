@@ -43,11 +43,11 @@ public class Application extends android.app.Application {
         //Needs to happen before anything else
         //This will fetch the debug flag value that all other calls depend on
 
-        //Checks if there is any connection to the internet
-
-
-        if(checkIfConnectionActive()){
-            hasConnection = checkIfThereIsInternetConnection();
+        //Check if there's a connection to a network
+        hasConnection = checkIfConnectionActive();
+        if(hasConnection){
+        //If we're connected to a network check if we have access to the internet
+           hasConnection = checkIfThereIsInternetConnection();
         }
 
          setupStoreEnvironment();
