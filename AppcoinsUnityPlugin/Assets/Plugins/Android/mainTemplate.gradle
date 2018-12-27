@@ -73,7 +73,7 @@ android {
 			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-unity.txt'**USER_PROGUARD**
 			jniDebuggable true
 		resValue "bool", "APPCOINS_ENABLE_POA", "true"
-		resValue "bool", "APPCOINS_ENABLE_DEBUG", "false"
+		resValue "bool", "APPCOINS_ENABLE_DEBUG", "true"
 		resValue "string", "APPCOINS_PREFAB", "AppcoinsPurchasing"
 			}
 
