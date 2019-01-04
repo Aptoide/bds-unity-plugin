@@ -47,7 +47,7 @@ public class Application extends android.app.Application {
         hasConnection = checkIfConnectionActive();
         if(hasConnection){
         //If we're connected to a network check if we have access to the internet
-           hasConnection = checkIfThereIsInternetConnection();
+        hasConnection = checkIfThereIsInternetConnection();
         }
 
          setupStoreEnvironment();
@@ -125,7 +125,7 @@ public class Application extends android.app.Application {
         Process p;
 
         try {
-            p = Runtime.getRuntime().exec("ping -c 1 -t 30 google.com");
+            p = Runtime.getRuntime().exec("ping -c 1 google.com");
             String lineRead;
             BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
 
@@ -134,19 +134,14 @@ public class Application extends android.app.Application {
                 if(lineRead.contains("Unknown")){
                     return false;
                 }
-
             }
 
-            if(lineRead == null){
-                return false;
-            }
-
-        }catch(IOException e) {
+        }catch(Exception e) {
             e.printStackTrace();
             return false;
         }
 
-    return true;
+        return true;
 
     }
 
