@@ -10,12 +10,14 @@ import com.aptoide.iabexample.util.Inventory;
 import com.aptoide.iabexample.util.Purchase;
 import com.aptoide.iabexample.util.WalletUtils;
 import com.unity3d.player.UnityPlayer;
+import com.unity3d.player.UnityPlayerActivity;
 
 import org.json.JSONException;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
+
 
 /**
  * Created by nunomonteiro on 13/08/2018.
@@ -226,6 +228,7 @@ public class UnityAppcoins  {
     public static void setUseAdsSDK(boolean val) {
         Log.d("Unity","Setting use ads: " + val);
         _useAds = val;
+
     }
 
     public static boolean hasWalletInstalled() {
@@ -235,7 +238,13 @@ public class UnityAppcoins  {
 
     public static boolean hasSpecificWalletInstalled() {
         boolean hasWallet = WalletUtils.hasSpecificWalletInstalled(UnityPlayer.currentActivity, "com.appcoins.wallet");
+        Log.d("ola", "hasSpecificWalletInstalled: olaaaaassdd");
         return hasWallet;
+    }
+
+    public static void checkWalletVersion() {
+        Log.d("Unity","Getting Wallet version");
+        WalletUtils.checkWalletVersion(UnityPlayer.currentActivity);
     }
 
     public static void promptWalletInstall() {

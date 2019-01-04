@@ -36,6 +36,8 @@ public class Application extends android.app.Application {
         super.onCreate();
         application=this;
 
+        Log.d("ESTOU A CHAMAR","ESTOU A CHAMAR");
+
         appcoinsPrefabName = getResources().getString(R.string.APPCOINS_PREFAB);
 
         PACKAGE_NAME = getApplicationContext().getPackageName();
@@ -125,7 +127,7 @@ public class Application extends android.app.Application {
         Process p;
 
         try {
-            p = Runtime.getRuntime().exec("ping -c 1 -t 30 google.com");
+            p = Runtime.getRuntime().exec("ping -c 1 google.com");
             String lineRead;
             BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
 
@@ -135,10 +137,6 @@ public class Application extends android.app.Application {
                     return false;
                 }
 
-            }
-
-            if(lineRead == null){
-                return false;
             }
 
         }catch(IOException e) {
