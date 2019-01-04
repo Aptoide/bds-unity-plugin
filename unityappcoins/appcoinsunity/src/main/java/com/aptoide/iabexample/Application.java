@@ -36,8 +36,6 @@ public class Application extends android.app.Application {
         super.onCreate();
         application=this;
 
-        Log.d("ESTOU A CHAMAR","ESTOU A CHAMAR");
-
         appcoinsPrefabName = getResources().getString(R.string.APPCOINS_PREFAB);
 
         PACKAGE_NAME = getApplicationContext().getPackageName();

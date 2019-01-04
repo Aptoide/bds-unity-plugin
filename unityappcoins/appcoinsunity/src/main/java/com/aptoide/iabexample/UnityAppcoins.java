@@ -238,7 +238,6 @@ public class UnityAppcoins  {
 
     public static boolean hasSpecificWalletInstalled() {
         boolean hasWallet = WalletUtils.hasSpecificWalletInstalled(UnityPlayer.currentActivity, "com.appcoins.wallet");
-        Log.d("ola", "hasSpecificWalletInstalled: olaaaaassdd");
         return hasWallet;
     }
 
