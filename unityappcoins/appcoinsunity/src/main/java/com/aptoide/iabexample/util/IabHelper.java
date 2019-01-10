@@ -1071,41 +1071,88 @@ public class IabHelper {
     return verificationFailed ? IABHELPER_VERIFICATION_FAILED : BILLING_RESPONSE_RESULT_OK;
   }
 
-  public String getAPPCPriceStringForSKU(String skuId) throws RemoteException, JSONException {
-      logDebug("Trying to get price string for skuid: " + skuId);
-      ArrayList<String> skuList = new ArrayList<String>();
-      skuList.add(skuId);
+  void printBundleContents(Bundle bundle) {
+    for (String key : bundle.keySet())
+    {
+      Log.d("Bundle Debug", key + " = \"" + bundle.get(key) + "\"");
+    }
+  }
 
-      Bundle querySkus = new Bundle();
-      querySkus.putStringArrayList(GET_SKU_DETAILS_ITEM_LIST, skuList);
+  JSONObject getSKUDetailsForSKUId(String skuId) throws RemoteException, JSONException {
+    ArrayList<String> skuList = new ArrayList<String>();
+    skuList.add(skuId);
 
-      if (mService == null)
-        return "ERROR";
+    Bundle querySkus = new Bundle();
+    querySkus.putStringArrayList(GET_SKU_DETAILS_ITEM_LIST, skuList);
 
-      Bundle skuDetails = mService.getSkuDetails(3, mContext.getPackageName(), ITEM_TYPE_INAPP, querySkus);
+    if (mService == null)
+      return null;
 
-      if (!skuDetails.containsKey(RESPONSE_GET_SKU_DETAILS_LIST)) {
-          int response = getResponseCodeFromBundle(skuDetails);
-          if (response != BILLING_RESPONSE_RESULT_OK) {
-              logDebug("getSkuDetails() failed: " + getResponseDesc(response));
-              return "ERROR";
-          } else {
-              logError("getSkuDetails() returned a bundle with neither an error nor a detail list.");
-              return "ERROR";
-          }
+    Bundle skuDetails = mService.getSkuDetails(3, mContext.getPackageName(), ITEM_TYPE_INAPP, querySkus);
+
+    //Uncomment to debug bundle contents
+    //printBundleContents(skuDetails);
+
+    if (!skuDetails.containsKey(RESPONSE_GET_SKU_DETAILS_LIST)) {
+      int response = getResponseCodeFromBundle(skuDetails);
+      if (response != BILLING_RESPONSE_RESULT_OK) {
+        logDebug("getSkuDetails() failed: " + getResponseDesc(response));
+        return null;
+      } else {
+        logError("getSkuDetails() returned a bundle with neither an error nor a detail list.");
+        return null;
       }
+    }
 
-      ArrayList<String> responseList = skuDetails.getStringArrayList(RESPONSE_GET_SKU_DETAILS_LIST);
+    ArrayList<String> responseList = skuDetails.getStringArrayList(RESPONSE_GET_SKU_DETAILS_LIST);
 
-      for (String thisResponse : responseList) {
-          JSONObject json = new JSONObject(thisResponse);
-          if (json != null && json.has("price_amount_micros")) {
-              return json.getString("price_amount_micros");
-          }
+    String response = responseList.get(0);
+
+    JSONObject json = new JSONObject(response);
+    return json;
+  }
+
+  public String getAPPCPriceStringForSKU(String skuId) throws RemoteException, JSONException {
+      logDebug("Trying to get the appc price string for skuid: " + skuId);
+
+      JSONObject json = getSKUDetailsForSKUId(skuId);
+
+      String key = "price_amount_micros";
+
+      if (json != null && json.has(key)) {
+          return json.getString(key);
       }
 
       return "ERROR";
   }
+
+    public String getFIATPriceStringForSKU(String skuId) throws RemoteException, JSONException {
+        logDebug("Trying to get fiat price string for skuid: " + skuId);
+
+        JSONObject json = getSKUDetailsForSKUId(skuId);
+
+        String key = "price";
+
+        if (json != null && json.has(key)) {
+            return json.getString(key);
+        }
+
+        return "ERROR";
+    }
+
+    public String getFIATCurrencyCodeForSKU(String skuId) throws RemoteException, JSONException {
+        logDebug("Trying to get the currency code for skuid: " + skuId);
+
+        JSONObject json = getSKUDetailsForSKUId(skuId);
+
+        String key = "price_currency_code";
+
+        if (json != null && json.has(key)) {
+            return json.getString(key);
+        }
+
+        return "ERROR";
+    }
 
   int querySkuDetails(String itemType, Inventory inv, List<String> moreSkus)
       throws RemoteException, JSONException {

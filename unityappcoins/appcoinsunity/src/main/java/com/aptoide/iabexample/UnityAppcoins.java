@@ -13,8 +13,6 @@ import com.unity3d.player.UnityPlayer;
 
 import org.json.JSONException;
 
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.List;
 
 /**
@@ -318,6 +316,15 @@ public class UnityAppcoins  {
     public String getAPPCPriceStringForSKU(String skuID) throws RemoteException, JSONException {
         return mHelper.getAPPCPriceStringForSKU(skuID);
     }
+
+    public String getFiatPriceStringForSKU(String skuID) throws RemoteException, JSONException {
+        return mHelper.getFIATPriceStringForSKU(skuID);
+    }
+
+    public String getFIATCurrencyCodeForSKU(String skuID) throws RemoteException, JSONException {
+        return mHelper.getFIATCurrencyCodeForSKU(skuID);
+    }
+
 
     public boolean OwnsProduct(String skuID) {
         boolean hasPurchase = false;
