@@ -29,6 +29,10 @@ public class Logic : MonoBehaviour, IPayloadValidator {
 
     [SerializeField]
     private Text _priceTxt;
+    [SerializeField]
+    private Text _priceFiatTxt;
+    [SerializeField]
+    private Text _currencyCodeTxt;
 
     public const string GAS_KEY = "gas";
     public static string kProductIDConsumable = "gas";
@@ -63,6 +67,8 @@ public class Logic : MonoBehaviour, IPayloadValidator {
         EnablePurchaseButtons();
 
         _priceTxt.text = _appcoins.GetAPPCPriceStringForSKU("gas");
+        _priceFiatTxt.text = _appcoins.GetFiatPriceStringForSKU("gas");
+        _currencyCodeTxt.text = _appcoins.GetFIATCurrencyCodeForSKU("gas");
     }
 
     private void OnPurchaseSuccess(AppcoinsProduct product)
