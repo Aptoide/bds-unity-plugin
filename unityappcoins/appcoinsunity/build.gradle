@@ -34,6 +34,8 @@ android {
     buildTypes {
         debug {
             minifyEnabled false
+            resValue "string", "APPCOINS_WALLET_ADDRESS", ""
+            resValue "string", "APPCOINS_DEVELOPER_KEY", ""
             resValue "string", "APPCOINS_PREFAB", "AppcoinsUnity"
             resValue "bool", "APPCOINS_ENABLE_POA", "false"
             resValue "bool", "APPCOINS_ENABLE_DEBUG", "false"
@@ -41,6 +43,8 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            resValue "string", "APPCOINS_WALLET_ADDRESS", ""
+            resValue "string", "APPCOINS_DEVELOPER_KEY", ""
             resValue "string", "APPCOINS_PREFAB", "AppcoinsUnity"
             resValue "bool", "APPCOINS_ENABLE_POA", "false"
             resValue "bool", "APPCOINS_ENABLE_DEBUG", "false"

@@ -10,13 +10,10 @@ using Appcoins.Purchasing;
 public class Logic : MonoBehaviour, IPayloadValidator {
 
     [SerializeField]
+    private Text _statusTxt;
+
+    [SerializeField]
     private Text _gasTxt;
-
-    [SerializeField]
-    private AppcoinsPurchasing _appcoins;
-
-    [SerializeField]
-    private Purchaser _purchaser;
 
     [SerializeField]
     private GameObject _adsBar;
@@ -34,8 +31,17 @@ public class Logic : MonoBehaviour, IPayloadValidator {
     public static string kProductIDConsumable = "gas";
     public static string kProductIDNonConsumable = "premium";
 
+    private AppcoinsPurchasing _appcoins;
+    private Purchaser _purchaser;
     private int _gasAmount;
     private bool _disabledAds;
+
+    void Awake() {
+        GameObject appcoinsPurchasing = new GameObject();
+        appcoinsPurchasing.name = "AppcoinsPurchasing";
+        _purchaser = appcoinsPurchasing.AddComponent<Purchaser>();
+        _purchaser.SetStatusLabel(_statusTxt);
+    }
 
 	// Use this for initialization
 	void Start () {
@@ -48,6 +54,9 @@ public class Logic : MonoBehaviour, IPayloadValidator {
 	}
 
     void SetupPurchaser() {
+
+        _appcoins = _purchaser.gameObject.GetComponent<AppcoinsPurchasing>();
+
         _purchaser.onInitializeSuccess.AddListener(OnInitializeSuccess);
         _purchaser.onPurchaseSuccess.AddListener(OnPurchaseSuccess);
 
@@ -55,6 +64,13 @@ public class Logic : MonoBehaviour, IPayloadValidator {
         _purchaser.AddProduct(kProductIDNonConsumable, AppcoinsProductType.NonConsumable);
 
         _purchaser.InitializePurchasing();
+
+
+        if (_appcoins == null)
+        {
+            Debug.Log("we have a problem!");
+        }
+
 
         _appcoins.SetupCustomValidator(this);
     }

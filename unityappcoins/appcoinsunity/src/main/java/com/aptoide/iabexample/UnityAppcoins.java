@@ -13,8 +13,6 @@ import com.unity3d.player.UnityPlayer;
 
 import org.json.JSONException;
 
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.List;
 
 /**
@@ -206,13 +204,15 @@ public class UnityAppcoins  {
         instance.CreateIABHelper();
     }
 
-    public static void setDeveloperAddress(String address) {
-        Application.setDeveloperAddress(address);
-    }
+    //DEPRECATED. Now this value comes from Application
+//    public static void setDeveloperAddress(String address) {
+//        Application.setDeveloperAddress(address);
+//    }
 
-    public static void setDeveloperBDSPublicKey(String key) {
-        developerBDSPublicKey = key;
-    }
+    //DEPRECATED. Now this value comes from Application
+//    public static void setDeveloperBDSPublicKey(String key) {
+//        developerBDSPublicKey = key;
+//    }
 
     public static void setLogging(boolean val) {
         shouldLog = val;
@@ -260,7 +260,9 @@ public class UnityAppcoins  {
          * of their own and then fake messages from the server.
          */
 
-        String base64EncodedPublicKey = developerBDSPublicKey;
+        String base64EncodedPublicKey = Application.developerPublicKey;
+
+        Log.d("Unity","CreateIABHelper:: base64encodedkey " + base64EncodedPublicKey);
 
         // Some sanity checks to see if the developer (that's you!) really followed the
         // instructions to run this sample (don't put these checks on your app!)

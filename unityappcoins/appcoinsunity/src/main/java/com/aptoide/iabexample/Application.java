@@ -23,6 +23,7 @@ public class Application extends android.app.Application {
     static Application application;
     static String PACKAGE_NAME = "";
     static String developerAddress = "";
+    static String developerPublicKey = "CONSTRUCT_YOUR_PORTAL_KEY_AND_PLACE_IT_HERE";
     private static AppCoinsAds adsSdk;
 
     private Purchase _latestPurchase;
@@ -50,11 +51,22 @@ public class Application extends android.app.Application {
         hasConnection = checkIfThereIsInternetConnection();
         }
 
+        setupDeveloperKeys();
          setupStoreEnvironment();
          setupAdsSDK();
          Log.d("AppcoinsUnityPlugin", "Aplication began.");
 
 
+    }
+
+    private void setupDeveloperKeys() {
+        final String walletAddress = getResources().getString(R.string.APPCOINS_WALLET_ADDRESS);
+        developerAddress = walletAddress;
+
+        final String publicKey = getResources().getString(R.string.APPCOINS_DEVELOPER_KEY);
+        developerPublicKey= publicKey;
+
+        Log.d("AppcoinsUnityPlugin", "wallet address is " + developerAddress + " public key is " + developerPublicKey);
     }
 
     public void setupStoreEnvironment() {
@@ -89,9 +101,10 @@ public class Application extends android.app.Application {
 
     }
 
-    public static void setDeveloperAddress(String theDeveloperAddress) {
-        developerAddress = theDeveloperAddress;
-    }
+    //DEPRECATED! Now the value comes from build gradle
+//    public static void setDeveloperAddress(String theDeveloperAddress) {
+//        developerAddress = theDeveloperAddress;
+//    }
 
     public String getDeveloperAddress() {
         return developerAddress;
