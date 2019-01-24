@@ -26,6 +26,10 @@ public class Logic : MonoBehaviour, IPayloadValidator {
 
     [SerializeField]
     private Text _priceTxt;
+    [SerializeField]
+    private Text _priceFiatTxt;
+    [SerializeField]
+    private Text _currencyCodeTxt;
 
     public const string GAS_KEY = "gas";
     public static string kProductIDConsumable = "gas";

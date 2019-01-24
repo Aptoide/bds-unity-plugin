@@ -321,6 +321,15 @@ public class UnityAppcoins  {
         return mHelper.getAPPCPriceStringForSKU(skuID);
     }
 
+    public String getFiatPriceStringForSKU(String skuID) throws RemoteException, JSONException {
+        return mHelper.getFIATPriceStringForSKU(skuID);
+    }
+
+    public String getFIATCurrencyCodeForSKU(String skuID) throws RemoteException, JSONException {
+        return mHelper.getFIATCurrencyCodeForSKU(skuID);
+    }
+
+
     public boolean OwnsProduct(String skuID) {
         boolean hasPurchase = false;
         if (mInventory != null) {
