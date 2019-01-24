@@ -36,13 +36,6 @@ public class Logic : MonoBehaviour, IPayloadValidator {
     private int _gasAmount;
     private bool _disabledAds;
 
-    void Awake() {
-        GameObject appcoinsPurchasing = new GameObject();
-        appcoinsPurchasing.name = "AppcoinsPurchasing";
-        _purchaser = appcoinsPurchasing.AddComponent<Purchaser>();
-        _purchaser.SetStatusLabel(_statusTxt);
-    }
-
 	// Use this for initialization
 	void Start () {
         //DisablePurchaseButtons();
@@ -55,7 +48,9 @@ public class Logic : MonoBehaviour, IPayloadValidator {
 
     void SetupPurchaser() {
 
-        _appcoins = _purchaser.gameObject.GetComponent<AppcoinsPurchasing>();
+        _purchaser = Purchaser.Create();
+
+        _purchaser.SetStatusLabel(_statusTxt);
 
         _purchaser.onInitializeSuccess.AddListener(OnInitializeSuccess);
         _purchaser.onPurchaseSuccess.AddListener(OnPurchaseSuccess);
@@ -65,20 +60,13 @@ public class Logic : MonoBehaviour, IPayloadValidator {
 
         _purchaser.InitializePurchasing();
 
-
-        if (_appcoins == null)
-        {
-            Debug.Log("we have a problem!");
-        }
-
-
-        _appcoins.SetupCustomValidator(this);
+        _purchaser.SetupCustomValidator(this);
     }
 
     private void OnInitializeSuccess() {
         EnablePurchaseButtons();
 
-        _priceTxt.text = _appcoins.GetAPPCPriceStringForSKU("gas");
+        _priceTxt.text = _purchaser.GetAPPCPriceStringForSKU("gas");
     }
 
     private void OnPurchaseSuccess(AppcoinsProduct product)
