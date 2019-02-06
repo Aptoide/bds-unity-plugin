@@ -322,11 +322,11 @@ public class UnityAppcoins  {
     }
 
     public String getFiatPriceStringForSKU(String skuID) throws RemoteException, JSONException {
-        return mHelper.getFIATPriceStringForSKU(skuID);
+        return mHelper.getFiatPriceStringForSKU(skuID);
     }
 
-    public String getFIATCurrencyCodeForSKU(String skuID) throws RemoteException, JSONException {
-        return mHelper.getFIATCurrencyCodeForSKU(skuID);
+    public String getFiatCurrencyCodeForSKU(String skuID) throws RemoteException, JSONException {
+        return mHelper.getFiatCurrencyCodeForSKU(skuID);
     }
 
 

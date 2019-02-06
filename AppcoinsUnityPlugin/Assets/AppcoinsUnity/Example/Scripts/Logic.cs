@@ -71,6 +71,9 @@ public class Logic : MonoBehaviour, IPayloadValidator {
         EnablePurchaseButtons();
 
         _priceTxt.text = _purchaser.GetAPPCPriceStringForSKU("gas");
+        _priceFiatTxt.text = _purchaser.GetFiatPriceStringForSKU("gas");
+        _currencyCodeTxt.text = _purchaser.GetFiatCurrencyCodeForSKU("gas");
+            
     }
 
     private void OnPurchaseSuccess(AppcoinsProduct product)

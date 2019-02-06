@@ -1126,7 +1126,7 @@ public class IabHelper {
       return "ERROR";
   }
 
-    public String getFIATPriceStringForSKU(String skuId) throws RemoteException, JSONException {
+    public String getFiatPriceStringForSKU(String skuId) throws RemoteException, JSONException {
         logDebug("Trying to get fiat price string for skuid: " + skuId);
 
         JSONObject json = getSKUDetailsForSKUId(skuId);
@@ -1140,7 +1140,7 @@ public class IabHelper {
         return "ERROR";
     }
 
-    public String getFIATCurrencyCodeForSKU(String skuId) throws RemoteException, JSONException {
+    public String getFiatCurrencyCodeForSKU(String skuId) throws RemoteException, JSONException {
         logDebug("Trying to get the currency code for skuid: " + skuId);
 
         JSONObject json = getSKUDetailsForSKUId(skuId);
