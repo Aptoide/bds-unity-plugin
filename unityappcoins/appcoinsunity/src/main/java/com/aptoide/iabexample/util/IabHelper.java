@@ -1117,13 +1117,14 @@ public class IabHelper {
 
       JSONObject json = getSKUDetailsForSKUId(skuId);
 
-      String key = "price_amount_micros";
+      String key = "price_appc";
 
       if (json != null && json.has(key)) {
           return json.getString(key);
       }
 
-      return "ERROR";
+      return "0.0"; //TODO revert back to ERROR when the SDK returns this key!
+      //return "ERROR";
   }
 
     public String getFiatPriceStringForSKU(String skuId) throws RemoteException, JSONException {
