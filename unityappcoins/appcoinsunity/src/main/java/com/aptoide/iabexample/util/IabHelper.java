@@ -307,7 +307,7 @@ public class IabHelper {
         .queryIntentServices(serviceIntent, 0);
     if (intentServices != null && !intentServices.isEmpty()) {
       // service available to handle that Intent
-        //TODO catch exception and return error to plugin
+      //TODO catch exception and return error to plugin
       mContext.bindService(serviceIntent, mServiceConn, Context.BIND_AUTO_CREATE);
     } else {
       // no service available to handle that Intent
@@ -383,7 +383,8 @@ public class IabHelper {
    */
   public interface OnPayloadValidationFinishedListener {
     /**
-     * Called to notify that an in-app purchase payload validation finished. If the validation was successful,
+     * Called to notify that an in-app purchase payload validation finished. If the validation was
+     * successful,
      * then the sku parameter specifies which item was purchased. If the purchase failed,
      * the sku and extraData parameters may or may not be null, depending on how far the purchase
      * process went.
@@ -548,12 +549,12 @@ public class IabHelper {
     flagEndAsync();
 
     //TODO FIX THIS
-//    if (data == null) {
-//      logError("Null data in IAB activity result.");
-//      result = new IabResult(IABHELPER_BAD_RESPONSE, "Null data in IAB result");
-//      if (mPurchaseListener != null) mPurchaseListener.onIabPurchaseFinished(result, null);
-//      return true;
-//    }
+    //    if (data == null) {
+    //      logError("Null data in IAB activity result.");
+    //      result = new IabResult(IABHELPER_BAD_RESPONSE, "Null data in IAB result");
+    //      if (mPurchaseListener != null) mPurchaseListener.onIabPurchaseFinished(result, null);
+    //      return true;
+    //    }
 
     int responseCode = getResponseCodeFromIntent(data);
 
@@ -563,7 +564,7 @@ public class IabHelper {
         logError("Null data in IAB activity result.");
         result = new IabResult(IABHELPER_BAD_RESPONSE, "Null data in IAB result");
         if (mPurchaseListener != null) mPurchaseListener.onIabPurchaseFinished(result, null);
-          return true;
+        return true;
       }
 
       String purchaseData = data.getStringExtra(RESPONSE_INAPP_PURCHASE_DATA);
@@ -592,24 +593,26 @@ public class IabHelper {
         String sku = purchase.getSku();
 
         // Verify signature
-          try {
-              if (!Security.verifyPurchase(mSignatureBase64, purchaseData, dataSignature)) {
-                  String errorMsg = "Signature verification failed for sku " + sku + ".\n With key " + mSignatureBase64;
-                  logError(errorMsg);
-                  result = new IabResult(IABHELPER_VERIFICATION_FAILED,
-                          errorMsg);
-                  if (mPurchaseListener != null) mPurchaseListener.onIabPurchaseFinished(result, purchase);
-                  return true;
-              }
-              logDebug("Purchase signature successfully verified.");
-          } catch (IllegalArgumentException e) {
-              String errorMsg = "Purchase signature verification FAILED. Invalid key: " + mSignatureBase64;
-              logError(errorMsg);
-              result = new IabResult(IABHELPER_VERIFICATION_FAILED,
-                      errorMsg);
-              if (mPurchaseListener != null) mPurchaseListener.onIabPurchaseFinished(result, purchase);
-              return true;
+        try {
+          if (!Security.verifyPurchase(mSignatureBase64, purchaseData, dataSignature)) {
+            String errorMsg =
+                "Signature verification failed for sku " + sku + ".\n With key " + mSignatureBase64;
+            logError(errorMsg);
+            result = new IabResult(IABHELPER_VERIFICATION_FAILED, errorMsg);
+            if (mPurchaseListener != null) {
+              mPurchaseListener.onIabPurchaseFinished(result, purchase);
+            }
+            return true;
           }
+          logDebug("Purchase signature successfully verified.");
+        } catch (IllegalArgumentException e) {
+          String errorMsg =
+              "Purchase signature verification FAILED. Invalid key: " + mSignatureBase64;
+          logError(errorMsg);
+          result = new IabResult(IABHELPER_VERIFICATION_FAILED, errorMsg);
+          if (mPurchaseListener != null) mPurchaseListener.onIabPurchaseFinished(result, purchase);
+          return true;
+        }
       } catch (JSONException e) {
         logError("Failed to parse purchase data.");
         e.printStackTrace();
@@ -652,13 +655,15 @@ public class IabHelper {
   /**
    * Queries the inventory. This will query all owned items from the server, as well as
    * information on additional skus, if specified. This method may block or take long to execute.
-   * Do not call from a UI thread. For that, use the non-blocking version {@link #queryInventoryAsync}.
+   * Do not call from a UI thread. For that, use the non-blocking version {@link
+   * #queryInventoryAsync}.
    *
    * @param querySkuDetails if true, SKU details (price, description, etc) will be queried as well
    * as purchase information.
    * @param moreItemSkus additional PRODUCT skus to query information on, regardless of ownership.
    * Ignored if null or if querySkuDetails is false.
-   * @param moreSubsSkus additional SUBSCRIPTIONS skus to query information on, regardless of ownership.
+   * @param moreSubsSkus additional SUBSCRIPTIONS skus to query information on, regardless of
+   * ownership.
    * Ignored if null or if querySkuDetails is false.
    *
    * @throws IabException if a problem occurs while refreshing the inventory.
@@ -936,9 +941,8 @@ public class IabHelper {
 
   // Workaround to bug where sometimes response codes come as Long instead of Integer
   int getResponseCodeFromIntent(Intent i) {
-      //TODO check this with android team
-      if (i == null)
-          return BILLING_RESPONSE_RESULT_ERROR;
+    //TODO check this with android team
+    if (i == null) return BILLING_RESPONSE_RESULT_ERROR;
     Object o = i.getExtras()
         .get(RESPONSE_CODE);
     if (o == null) {
@@ -1028,8 +1032,7 @@ public class IabHelper {
           ownedItems.getStringArrayList(RESPONSE_INAPP_PURCHASE_DATA_LIST);
       ArrayList<String> signatureList =
           ownedItems.getStringArrayList(RESPONSE_INAPP_SIGNATURE_LIST);
-      ArrayList<String> idsList =
-          ownedItems.getStringArrayList(RESPONSE_INAPP_PURCHASE_ID_LIST);
+      ArrayList<String> idsList = ownedItems.getStringArrayList(RESPONSE_INAPP_PURCHASE_ID_LIST);
 
       for (int i = 0; i < purchaseDataList.size(); ++i) {
         String purchaseData = purchaseDataList.get(i);
@@ -1060,7 +1063,7 @@ public class IabHelper {
         } catch (IllegalArgumentException e) {
           logError("Provided invalid key: " + mSignatureBase64);
           //return BILLING_RESPONSE_RESULT_OK; //REMOVE THIS LINE AND UNCOMMENT THE ONE BELOW
-          return  IABHELPER_VERIFICATION_FAILED;
+          return IABHELPER_VERIFICATION_FAILED;
         }
       }
 
@@ -1072,8 +1075,7 @@ public class IabHelper {
   }
 
   void printBundleContents(Bundle bundle) {
-    for (String key : bundle.keySet())
-    {
+    for (String key : bundle.keySet()) {
       Log.d("Bundle Debug", key + " = \"" + bundle.get(key) + "\"");
     }
   }
@@ -1085,10 +1087,10 @@ public class IabHelper {
     Bundle querySkus = new Bundle();
     querySkus.putStringArrayList(GET_SKU_DETAILS_ITEM_LIST, skuList);
 
-    if (mService == null)
-      return null;
+    if (mService == null) return null;
 
-    Bundle skuDetails = mService.getSkuDetails(3, mContext.getPackageName(), ITEM_TYPE_INAPP, querySkus);
+    Bundle skuDetails =
+        mService.getSkuDetails(3, mContext.getPackageName(), ITEM_TYPE_INAPP, querySkus);
 
     //Uncomment to debug bundle contents
     //printBundleContents(skuDetails);
@@ -1113,47 +1115,46 @@ public class IabHelper {
   }
 
   public String getAPPCPriceStringForSKU(String skuId) throws RemoteException, JSONException {
-      logDebug("Trying to get the appc price string for skuid: " + skuId);
+    logDebug("Trying to get the appc price string for skuid: " + skuId);
 
-      JSONObject json = getSKUDetailsForSKUId(skuId);
+    JSONObject json = getSKUDetailsForSKUId(skuId);
 
-      String key = "price_appc";
+    String key = "appc_price";
 
-      if (json != null && json.has(key)) {
-          return json.getString(key);
-      }
+    if (json != null && json.has(key)) {
+      return json.getString(key);
+    }
 
-      return "0.0"; //TODO revert back to ERROR when the SDK returns this key!
-      //return "ERROR";
+    return "ERROR";
   }
 
-    public String getFiatPriceStringForSKU(String skuId) throws RemoteException, JSONException {
-        logDebug("Trying to get fiat price string for skuid: " + skuId);
+  public String getFiatPriceStringForSKU(String skuId) throws RemoteException, JSONException {
+    logDebug("Trying to get fiat price string for skuid: " + skuId);
 
-        JSONObject json = getSKUDetailsForSKUId(skuId);
+    JSONObject json = getSKUDetailsForSKUId(skuId);
 
-        String key = "price";
+    String key = "price";
 
-        if (json != null && json.has(key)) {
-            return json.getString(key);
-        }
-
-        return "ERROR";
+    if (json != null && json.has(key)) {
+      return json.getString(key);
     }
 
-    public String getFiatCurrencyCodeForSKU(String skuId) throws RemoteException, JSONException {
-        logDebug("Trying to get the currency code for skuid: " + skuId);
+    return "ERROR";
+  }
 
-        JSONObject json = getSKUDetailsForSKUId(skuId);
+  public String getFiatCurrencyCodeForSKU(String skuId) throws RemoteException, JSONException {
+    logDebug("Trying to get the currency code for skuid: " + skuId);
 
-        String key = "price_currency_code";
+    JSONObject json = getSKUDetailsForSKUId(skuId);
 
-        if (json != null && json.has(key)) {
-            return json.getString(key);
-        }
+    String key = "price_currency_code";
 
-        return "ERROR";
+    if (json != null && json.has(key)) {
+      return json.getString(key);
     }
+
+    return "ERROR";
+  }
 
   int querySkuDetails(String itemType, Inventory inv, List<String> moreSkus)
       throws RemoteException, JSONException {
