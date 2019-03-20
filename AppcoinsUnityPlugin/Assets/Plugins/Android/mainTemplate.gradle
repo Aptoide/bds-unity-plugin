@@ -75,8 +75,8 @@ android {
 		resValue "bool", "APPCOINS_ENABLE_POA", "true"
 		resValue "bool", "APPCOINS_ENABLE_DEBUG", "true"
 			resValue "string", "APPCOINS_PREFAB", "AppcoinsPurchasing"
-		resValue "string", "APPCOINS_WALLET_ADDRESS", "0x95cee221da20e0e02bb9c233b0055b1779a7d926"
-		resValue "string", "APPCOINS_DEVELOPER_KEY", "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyEt94j9rt0UvpkZ2jPMZZ16yUrBOtjpIQCWi/F3HN0+iwSAeEJyDw7xIKfNTEc0msm+m6ud1kJpLK3oCsK61syZ8bYQlNZkUxTaWNof1nMnbw3Xu5nuYMuowmzDqNMWg5jNooy6oxwIgVcdvbyGi5RIlxqbo2vSAwpbAAZE2HbUrysKhLME7IOrdRR8MQbSbKEy/9MtfKz0uZCJGi9h+dQb0b69H7Yo+/BN/ayBSJzOPlaqmiHK5lZsnZhK+ixpB883fr+PgSczU7qGoktqoe6Fs+nhk9bLElljCs5ZIl9/NmOSteipkbplhqLY7KwapDmhrtBgrTetmnW9PU/eCWQIDAQAB"
+		resValue "string", "APPCOINS_WALLET_ADDRESS", "0xd133fab7abc4711fd328c4aefbf04256a79b1b40"
+		resValue "string", "APPCOINS_DEVELOPER_KEY", "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyEt94j9rt0UvpkZ2jPMZZ16yUrBOtjpIQCWi"
 			}
 
 		release {
@@ -87,8 +87,8 @@ android {
 		resValue "bool", "APPCOINS_ENABLE_POA", "true"
 		resValue "bool", "APPCOINS_ENABLE_DEBUG", "true"
 			**SIGNCONFIG**
-		resValue "string", "APPCOINS_WALLET_ADDRESS", "0x95cee221da20e0e02bb9c233b0055b1779a7d926"
-		resValue "string", "APPCOINS_DEVELOPER_KEY", "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyEt94j9rt0UvpkZ2jPMZZ16yUrBOtjpIQCWi/F3HN0+iwSAeEJyDw7xIKfNTEc0msm+m6ud1kJpLK3oCsK61syZ8bYQlNZkUxTaWNof1nMnbw3Xu5nuYMuowmzDqNMWg5jNooy6oxwIgVcdvbyGi5RIlxqbo2vSAwpbAAZE2HbUrysKhLME7IOrdRR8MQbSbKEy/9MtfKz0uZCJGi9h+dQb0b69H7Yo+/BN/ayBSJzOPlaqmiHK5lZsnZhK+ixpB883fr+PgSczU7qGoktqoe6Fs+nhk9bLElljCs5ZIl9/NmOSteipkbplhqLY7KwapDmhrtBgrTetmnW9PU/eCWQIDAQAB"
+		resValue "string", "APPCOINS_WALLET_ADDRESS", "0xd133fab7abc4711fd328c4aefbf04256a79b1b40"
+		resValue "string", "APPCOINS_DEVELOPER_KEY", "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyEt94j9rt0UvpkZ2jPMZZ16yUrBOtjpIQCWi"
 			}
 
 		}
